@@ -2,385 +2,1451 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SahabatKelas adalah platform berbasis AI untuk membantu sekolah mendeteksi dini risiko perundungan, memetakan kondisi siswa, dan mendukung pendampingan yang berkelanjutan.">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="SahabatKelas adalah platform berbasis AI untuk membantu sekolah mendeteksi dini risiko perundungan, memetakan kondisi siswa, dan mendukung pendampingan yang berkelanjutan."
+    >
+
     <title>SahabatKelas — Sekolah Aman, Siswa Nyaman</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @vite([
+        'resources/css/app.css',
+        'resources/js/app.js'
+    ])
+
     <style>
-        html { scroll-behavior: smooth; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(
+                    rgba(20, 184, 166, 0.08) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(20, 184, 166, 0.08) 1px,
+                    transparent 1px
+                );
+
+            background-size: 32px 32px;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased font-sans">
+
+<body class="bg-white text-gray-800 antialiased">
 @php
     $user = auth()->user();
+
     $dashboardRoute = match ($user?->role) {
-        'admin' => Route::has('admin.dashboard') ? route('admin.dashboard') : url('/admin'),
-        'guru' => Route::has('guru.dashboard') ? route('guru.dashboard') : url('/guru'),
-        'siswa' => Route::has('siswa.beranda') ? route('siswa.beranda') : url('/siswa'),
-        default => route('login'),
+        'admin' => Route::has('admin.dashboard')
+            ? route('admin.dashboard')
+            : '#',
+
+        'guru' => Route::has('guru.dashboard')
+            ? route('guru.dashboard')
+            : '#',
+
+        'siswa' => Route::has('siswa.beranda')
+            ? route('siswa.beranda')
+            : '#',
+
+        default => Route::has('login')
+            ? route('login')
+            : url('/login'),
     };
-    $dashboardLabel = match ($user?->role) {
-        'admin' => 'Dashboard Admin',
-        'guru' => 'Dashboard Guru',
-        'siswa' => 'Dashboard Siswa',
-        default => 'Masuk / Daftar',
-    };
+
+    $dashboardLabel = $user
+        ? 'Buka Dashboard'
+        : 'Masuk ke Platform';
 @endphp
 
-<!-- Navbar -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-teal-400 to-blue-500 rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-teal-200/50">S</div>
-            <span class="text-xl font-black tracking-tight text-gray-900">SahabatKelas<span class="text-teal-500">.</span></span>
-        </div>
-        
-        <div class="hidden lg:flex items-center gap-8 font-semibold text-sm text-gray-600">
-            <a href="#beranda" class="hover:text-teal-600 transition-colors">Beranda</a>
-            <a href="#tentang" class="hover:text-teal-600 transition-colors">Tentang</a>
-            <a href="#statistik" class="hover:text-teal-600 transition-colors">Statistik</a>
-            <a href="#artikel" class="hover:text-teal-600 transition-colors">Artikel</a>
+{{-- Navbar --}}
+<header
+    class="sticky top-0 z-50 border-b border-gray-100
+           bg-white/90 backdrop-blur-xl"
+>
+    <nav
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+               h-16 flex items-center justify-between"
+    >
+        {{-- Logo --}}
+        <a
+            href="{{ route('landing') }}"
+            class="flex items-center gap-3"
+        >
+            <div
+                class="w-10 h-10 rounded-2xl bg-blue-600
+                       flex items-center justify-center
+                       shadow-sm shadow-blue-200"
+            >
+                <svg
+                    class="w-6 h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 10h.01M12 10h.01M16 10h.01
+                           M9 16H5a2 2 0 01-2-2V6a2 2
+                           0 012-2h14a2 2 0 012 2v8a2
+                           2 0 01-2 2h-5l-3 3v-3z"
+                    />
+                </svg>
+            </div>
+
+            <div>
+                <p class="text-lg font-bold text-gray-900 leading-none">
+                    SahabatKelas
+                </p>
+
+                <p class="text-[10px] font-semibold text-blue-600 mt-1">
+                    SEKOLAH AMAN, SISWA NYAMAN
+                </p>
+            </div>
+        </a>
+
+        {{-- Menu desktop --}}
+        <div
+            class="hidden lg:flex items-center gap-8
+                   text-sm font-medium text-gray-600"
+        >
+            <a
+                href="#tentang"
+                class="hover:text-blue-600 transition-colors"
+            >
+                Tentang
+            </a>
+
+            <a
+                href="#fitur"
+                class="hover:text-blue-600 transition-colors"
+            >
+                Fitur
+            </a>
+
+            <a
+                href="#alur"
+                class="hover:text-blue-600 transition-colors"
+            >
+                Cara Kerja
+            </a>
+
+            <a
+                href="#pengguna"
+                class="hover:text-blue-600 transition-colors"
+            >
+                Pengguna
+            </a>
         </div>
 
-        <div class="flex items-center gap-4">
+        {{-- Tombol kanan --}}
+        <div class="flex items-center gap-3">
             @auth
-                <span class="hidden md:inline text-sm text-gray-500 font-medium">Halo, {{ $user?->siswa?->nama ?? $user?->guru?->nama ?? $user?->name ?? $user?->email }}</span>
+                <span
+                    class="hidden md:inline text-sm text-gray-500"
+                >
+                    Halo,
+                    {{ $user?->siswa?->nama
+                        ?? $user?->guru?->nama
+                        ?? $user?->name
+                        ?? $user?->email }}
+                </span>
             @endauth
-            <a href="{{ $dashboardRoute }}" class="inline-flex items-center justify-center rounded-xl bg-orange-500 px-6 py-2.5 text-sm font-bold text-white hover:bg-orange-600 transition-colors shadow-lg shadow-orange-200/50">
+
+            <a
+                href="{{ $dashboardRoute }}"
+                class="inline-flex items-center justify-center
+                       rounded-xl bg-blue-600 px-4 py-2.5
+                       text-sm font-semibold text-white
+                       hover:bg-blue-700 transition-colors
+                       shadow-sm shadow-blue-200"
+            >
                 {{ $dashboardLabel }}
             </a>
         </div>
     </nav>
 </header>
 
-<main id="beranda" class="pt-20">
-    <!-- Hero Section -->
-    <section class="relative bg-slate-900 overflow-hidden min-h-[650px] flex items-center py-24 pb-48">
-        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop" alt="Siswa di Sekolah" class="absolute inset-0 w-full h-full object-cover opacity-20" />
-        
-        <!-- Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-teal-900/50 to-blue-900/50"></div>
+<main>
+    {{-- Hero --}}
+    <section
+        class="relative overflow-hidden bg-gradient-to-b
+               from-blue-50/80 via-white to-white hero-grid"
+    >
+        <div
+            class="absolute -top-24 -right-24 w-96 h-96
+                   rounded-full bg-teal-200/30 blur-3xl"
+        ></div>
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="inline-flex items-center gap-2 rounded-full border border-teal-500/30 bg-teal-500/10 backdrop-blur-md px-4 py-2 text-xs font-bold text-teal-300 mb-6">
-                <span class="relative flex w-2 h-2">
-                    <span class="absolute inline-flex w-full h-full rounded-full bg-teal-400 opacity-75 animate-ping"></span>
-                    <span class="relative inline-flex w-2 h-2 rounded-full bg-teal-500"></span>
-                </span>
-                SELAMAT DATANG DI SAHABATKELAS!
-            </div>
-            
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight tracking-tight">
-                Mulai Masa Depan yang <br/>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-300">Aman & Cerah</span>
-            </h1>
-            
-            <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
-                Platform cerdas untuk mendeteksi dini risiko perundungan, memetakan kondisi psikologis siswa, dan membangun lingkungan belajar yang aman & nyaman di sekolah.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#tentang" class="inline-flex items-center justify-center rounded-xl bg-orange-500 px-8 py-4 text-base font-bold text-white hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/30 w-full sm:w-auto">
-                    Pelajari Lebih Lanjut &rarr;
-                </a>
-                <a href="{{ route('login') }}" class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-bold text-slate-900 hover:bg-gray-100 transition-colors w-full sm:w-auto">
-                    Mulai Sekarang
-                </a>
-            </div>
-        </div>
-    </section>
+        <div
+            class="absolute top-60 -left-32 w-80 h-80
+                   rounded-full bg-blue-200/20 blur-3xl"
+        ></div>
 
-    <!-- Feature Cards (Overlapping) -->
-    <section class="relative z-20 -mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <!-- Card 1 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-teal-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-teal-50 transition-colors">01</div>
-                <div class="w-14 h-14 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-6 relative z-10">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3 relative z-10">Deteksi Dini</h3>
-                <p class="text-gray-500 text-sm leading-relaxed relative z-10">Kenali potensi dan indikasi perundungan sejak awal melalui data check-in harian emosional siswa.</p>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-blue-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-blue-50 transition-colors">02</div>
-                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 relative z-10">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3 relative z-10">Aman & Anonim</h3>
-                <p class="text-gray-500 text-sm leading-relaxed relative z-10">Siswa dapat melaporkan kejadian perundungan dengan aman, rahasia, dan terjamin kerahasiaannya.</p>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-orange-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-orange-50 transition-colors">03</div>
-                <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center mb-6 relative z-10">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3 relative z-10">Analitik Guru</h3>
-                <p class="text-gray-500 text-sm leading-relaxed relative z-10">Dashboard analitik komprehensif untuk memantau kesejahteraan dan dinamika sosial di kelas.</p>
-            </div>
-
-            <!-- Card 4 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-violet-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-violet-50 transition-colors">04</div>
-                <div class="w-14 h-14 bg-violet-50 text-violet-600 rounded-2xl flex items-center justify-center mb-6 relative z-10">
-                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                </div>
-                <h3 class="text-xl font-bold text-gray-900 mb-3 relative z-10">Dukungan Psikologi</h3>
-                <p class="text-gray-500 text-sm leading-relaxed relative z-10">Integrasi dengan penanganan bimbingan konseling untuk intervensi yang tepat dan terukur.</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- About Us Section -->
-    <section id="tentang" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                <!-- Image Collage -->
-                <div class="relative">
-                    <div class="grid grid-cols-2 gap-4">
-                        <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=2070&auto=format&fit=crop" alt="Siswa" class="rounded-3xl object-cover h-[400px] w-full shadow-lg" />
-                        <div class="grid grid-rows-2 gap-4">
-                            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop" alt="Siswa Belajar" class="rounded-3xl object-cover h-[190px] w-full shadow-lg" />
-                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Interaksi Siswa" class="rounded-3xl object-cover h-[194px] w-full shadow-lg" />
-                        </div>
-                    </div>
-                    
-                    <!-- Floating Badge -->
-                    <div class="absolute -bottom-8 -left-8 bg-orange-500 text-white p-6 rounded-3xl shadow-xl shadow-orange-500/30 flex items-center gap-4 animate-bounce" style="animation-duration: 3s;">
-                        <div class="bg-white/20 p-3 rounded-2xl">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        </div>
-                        <div>
-                            <span class="text-2xl font-black leading-none">100%</span><br/>
-                            <span class="text-sm font-semibold opacity-90">Aman & Terpercaya</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Text Content -->
+        <div
+            class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+                   pt-16 pb-20 lg:pt-24 lg:pb-28"
+        >
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2
+                       items-center gap-12"
+            >
+                {{-- Teks hero --}}
                 <div>
-                    <p class="text-orange-500 font-bold uppercase tracking-wider mb-2 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        TENTANG SAHABATKELAS
+                    <div
+                        class="inline-flex items-center gap-2
+                               rounded-full border border-blue-200
+                               bg-white px-4 py-2 text-xs
+                               font-semibold text-blue-700 shadow-sm"
+                    >
+                        <span class="relative flex w-2.5 h-2.5">
+                            <span
+                                class="absolute inline-flex w-full h-full
+                                       rounded-full bg-blue-400 opacity-75
+                                       animate-ping"
+                            ></span>
+
+                            <span
+                                class="relative inline-flex w-2.5 h-2.5
+                                       rounded-full bg-blue-600"
+                            ></span>
+                        </span>
+
+                        Deteksi dini dan pendampingan berbasis data
+                    </div>
+
+                    <h1
+                        class="mt-6 text-4xl sm:text-5xl lg:text-6xl
+                               font-black tracking-tight text-gray-900
+                               leading-tight"
+                    >
+                        Membantu sekolah
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">
+                            memahami kondisi siswa
+                        </span>
+                        lebih awal.
+                    </h1>
+
+                    <p
+                        class="mt-6 max-w-2xl text-base sm:text-lg
+                               leading-relaxed text-gray-600"
+                    >
+                        SahabatKelas mengintegrasikan check-in siswa,
+                        laporan aman, observasi guru, analisis IndoBERT,
+                        pemetaan risiko, rekomendasi pendampingan, serta
+                        monitoring intervensi dalam satu platform.
                     </p>
-                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">Sistem Edukasi Kami Menginspirasi Lebih Banyak</h2>
-                    <p class="text-gray-600 mb-8 leading-relaxed text-lg">
-                        Membangun generasi yang sehat secara mental dan emosional adalah tanggung jawab bersama. Kami hadir dengan pendekatan proaktif menggunakan data untuk memastikan tidak ada siswa yang merasa sendirian dalam menghadapi masalahnya di sekolah.
-                    </p>
-                    
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
-                        <!-- List item -->
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+
+                    <div
+                        class="mt-8 flex flex-col sm:flex-row
+                               items-stretch sm:items-center gap-3"
+                    >
+                        <a
+                            href="{{ $dashboardRoute }}"
+                            class="inline-flex items-center justify-center
+                                   gap-2 rounded-xl bg-blue-600
+                                   px-6 py-3.5 text-sm font-bold text-white
+                                   hover:bg-blue-700 transition-colors
+                                   shadow-lg shadow-blue-200"
+                        >
+                            {{ $dashboardLabel }}
+
+                            <svg
+                                class="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 5l7 7-7 7"
+                                />
+                            </svg>
+                        </a>
+
+                        <a
+                            href="#fitur"
+                            class="inline-flex items-center justify-center
+                                   rounded-xl border border-gray-200 bg-white
+                                   px-6 py-3.5 text-sm font-bold
+                                   text-gray-700 hover:bg-gray-50
+                                   transition-colors"
+                        >
+                            Pelajari Fitur
+                        </a>
+                    </div>
+
+                    <div
+                        class="mt-9 flex flex-wrap items-center
+                               gap-x-6 gap-y-3 text-sm text-gray-500"
+                    >
+                        <div class="flex items-center gap-2">
+                            <svg
+                                class="w-5 h-5 text-amber-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+
+                            Laporan aman
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <svg
+                                class="w-5 h-5 text-blue-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+
+                            Analisis AI
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <svg
+                                class="w-5 h-5 text-teal-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M5 13l4 4L19 7"
+                                />
+                            </svg>
+
+                            Monitoring berkelanjutan
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Visual dashboard --}}
+                <div class="relative">
+                    <div
+                        class="absolute -inset-5 rounded-[2rem]
+                               bg-gradient-to-r from-teal-200/40
+                               to-blue-200/30 blur-2xl"
+                    ></div>
+
+                    <div
+                        class="relative rounded-3xl border border-gray-200
+                               bg-white p-4 sm:p-6 shadow-2xl"
+                    >
+                        {{-- Header visual --}}
+                        <div
+                            class="flex items-center justify-between
+                                   border-b border-gray-100 pb-4"
+                        >
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-teal-100
+                                           flex items-center justify-center"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-teal-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M4 6h16M4 12h16M4 18h7"
+                                        />
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800">
+                                        Insight Kelas
+                                    </p>
+
+                                    <p class="text-xs text-gray-400">
+                                        Kondisi siswa hari ini
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <h4 class="text-gray-900 font-bold mb-1">Layanan Terintegrasi</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Terhubung langsung dengan BK dan Wali Kelas.</p>
+
+                            <span
+                                class="rounded-full bg-green-50
+                                       px-3 py-1 text-xs font-semibold
+                                       text-green-700"
+                            >
+                                Sistem Aktif
+                            </span>
+                        </div>
+
+                        {{-- Statistik --}}
+                        <div
+                            class="grid grid-cols-2 sm:grid-cols-3
+                                   gap-3 mt-5"
+                        >
+                            <div
+                                class="rounded-2xl border border-red-100
+                                       bg-red-50 p-4"
+                            >
+                                <p class="text-xs text-red-600">
+                                    Risiko Tinggi
+                                </p>
+
+                                <p
+                                    class="mt-2 text-2xl font-black
+                                           text-red-700"
+                                >
+                                    3
+                                </p>
+                            </div>
+
+                            <div
+                                class="rounded-2xl border border-yellow-100
+                                       bg-yellow-50 p-4"
+                            >
+                                <p class="text-xs text-yellow-700">
+                                    Risiko Sedang
+                                </p>
+
+                                <p
+                                    class="mt-2 text-2xl font-black
+                                           text-yellow-700"
+                                >
+                                    7
+                                </p>
+                            </div>
+
+                            <div
+                                class="col-span-2 sm:col-span-1
+                                       rounded-2xl border border-green-100
+                                       bg-green-50 p-4"
+                            >
+                                <p class="text-xs text-green-700">
+                                    Risiko Rendah
+                                </p>
+
+                                <p
+                                    class="mt-2 text-2xl font-black
+                                           text-green-700"
+                                >
+                                    20
+                                </p>
                             </div>
                         </div>
-                        <!-- List item -->
-                        <div class="flex gap-4">
-                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+
+                        {{-- Heatmap --}}
+                        <div
+                            class="mt-5 rounded-2xl border
+                                   border-gray-100 p-4"
+                        >
+                            <div
+                                class="flex items-center justify-between"
+                            >
+                                <div>
+                                    <p class="text-sm font-bold text-gray-800">
+                                        Heatmap Risiko Kelas
+                                    </p>
+
+                                    <p class="text-xs text-gray-400 mt-1">
+                                        Ringkasan berdasarkan analisis terbaru
+                                    </p>
+                                </div>
+
+                                <span
+                                    class="text-xs font-semibold
+                                           text-teal-600"
+                                >
+                                    Kelas VIII A
+                                </span>
                             </div>
-                            <div>
-                                <h4 class="text-gray-900 font-bold mb-1">Pemantauan Harian</h4>
-                                <p class="text-sm text-gray-500 leading-relaxed">Sistem check-in yang mudah dan cepat untuk siswa.</p>
+
+                            <div
+                                class="grid grid-cols-6 sm:grid-cols-8
+                                       gap-2 mt-4"
+                            >
+                                @foreach ([
+                                    'green', 'green', 'green', 'yellow',
+                                    'green', 'red', 'green', 'yellow',
+                                    'green', 'green', 'yellow', 'green',
+                                    'red', 'green', 'green', 'yellow',
+                                    'green', 'green', 'green', 'red',
+                                    'green', 'yellow', 'green', 'green',
+                                ] as $warna)
+                                    <div
+                                        class="aspect-square rounded-lg
+                                            {{ $warna === 'red'
+                                                ? 'bg-red-400'
+                                                : (
+                                                    $warna === 'yellow'
+                                                    ? 'bg-yellow-300'
+                                                    : 'bg-green-300'
+                                                ) }}"
+                                    ></div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        {{-- Rekomendasi --}}
+                        <div
+                            class="mt-5 rounded-2xl bg-gray-50
+                                   border border-gray-100 p-4"
+                        >
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-9 h-9 rounded-xl bg-teal-100
+                                           flex items-center justify-center
+                                           shrink-0"
+                                >
+                                    <svg
+                                        class="w-5 h-5 text-teal-600"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M9 12l2 2 4-4m5.618
+                                               -4.016A11.955 11.955
+                                               0 0112 2.944a11.955
+                                               11.955 0 01-8.618
+                                               3.04A12.02 12.02
+                                               0 003 9c0 5.591
+                                               3.824 10.29 9
+                                               11.622 5.176-1.332
+                                               9-6.03 9-11.622
+                                               0-1.042-.133-2.052
+                                               -.382-3.016z"
+                                        />
+                                    </svg>
+                                </div>
+
+                                <div>
+                                    <p class="text-xs text-gray-400">
+                                        Rekomendasi Pendampingan
+                                    </p>
+
+                                    <p
+                                        class="mt-1 text-sm font-semibold
+                                               text-gray-800"
+                                    >
+                                        Konseling individual dan pemantauan
+                                        kondisi siswa secara berkala.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <a href="#artikel" class="inline-flex items-center justify-center rounded-xl bg-orange-500 px-8 py-4 text-sm font-bold text-white hover:bg-orange-600 transition-colors shadow-lg shadow-orange-500/30">
-                        Temukan Lebih Lanjut &rarr;
+                    {{-- Floating card --}}
+                    <div
+                        class="absolute -bottom-6 -left-3 sm:-left-8
+                               rounded-2xl border border-gray-100
+                               bg-white px-4 py-3 shadow-xl"
+                    >
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-full bg-amber-50
+                                       flex items-center justify-center"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-amber-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2
+                                           5H7a2 2 0 01-2-2V5
+                                           a2 2 0 012-2h5.586a1
+                                           1 0 01.707.293l3.414
+                                           3.414a1 1 0 01.293
+                                           .707V19a2 2 0 01-2 2z"
+                                    />
+                                </svg>
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-gray-400">
+                                    Safe Report
+                                </p>
+
+                                <p class="text-sm font-bold text-gray-800">
+                                    Analisis selesai
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Tentang --}}
+    <section
+        id="tentang"
+        class="py-20 bg-white"
+    >
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+            <div
+                class="grid grid-cols-1 lg:grid-cols-2
+                       items-center gap-12"
+            >
+                <div>
+                    <p
+                        class="text-sm font-bold uppercase tracking-wider
+                               text-teal-600"
+                    >
+                        Mengapa SahabatKelas?
+                    </p>
+
+                    <h2
+                        class="mt-3 text-3xl sm:text-4xl font-black
+                               tracking-tight text-gray-900"
+                    >
+                        Risiko perundungan perlu diketahui sebelum
+                        kondisinya semakin berat.
+                    </h2>
+
+                    <p
+                        class="mt-5 text-base leading-relaxed
+                               text-gray-600"
+                    >
+                        Informasi kondisi siswa sering tersebar pada
+                        laporan, observasi, dan komunikasi yang berbeda.
+                        SahabatKelas membantu sekolah menyatukan informasi
+                        tersebut menjadi insight yang lebih mudah dipahami
+                        dan ditindaklanjuti.
+                    </p>
+                </div>
+
+                <div
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-4"
+                >
+                    <article
+                        class="rounded-2xl border border-gray-100
+                               bg-gray-50 p-6"
+                    >
+                        <div
+                            class="w-11 h-11 rounded-xl bg-blue-100
+                                   text-blue-600 flex items-center
+                                   justify-center"
+                        >
+                            <svg
+                                class="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M8 10h.01M12 10h.01M16
+                                       10h.01M9 16H5a2 2 0
+                                       01-2-2V6a2 2 0 012-2h14
+                                       a2 2 0 012 2v8a2 2 0
+                                       01-2 2h-5l-3 3v-3z"
+                                />
+                            </svg>
+                        </div>
+
+                        <h3
+                            class="mt-4 font-bold text-gray-800"
+                        >
+                            Ruang bercerita yang aman
+                        </h3>
+
+                        <p
+                            class="mt-2 text-sm leading-relaxed
+                                   text-gray-500"
+                        >
+                            Siswa dapat melakukan check-in dan mengirim
+                            laporan dengan pilihan anonim.
+                        </p>
+                    </article>
+
+                    <article
+                        class="rounded-2xl border border-gray-100
+                               bg-gray-50 p-6"
+                    >
+                        <div
+                            class="w-11 h-11 rounded-xl bg-teal-100
+                                   text-teal-600 flex items-center
+                                   justify-center"
+                        >
+                            <svg
+                                class="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9.75 17L9 20l-1 1h8l-1-1
+                                       -.75-3M3 13h18M5 17h14a2
+                                       2 0 002-2V5a2 2 0 00-2
+                                       -2H5a2 2 0 00-2 2v10a2
+                                       2 0 002 2z"
+                                />
+                            </svg>
+                        </div>
+
+                        <h3
+                            class="mt-4 font-bold text-gray-800"
+                        >
+                            Insight berbasis AI
+                        </h3>
+
+                        <p
+                            class="mt-2 text-sm leading-relaxed
+                                   text-gray-500"
+                        >
+                            IndoBERT membantu mengklasifikasikan indikasi
+                            laporan dan mendukung pemetaan risiko.
+                        </p>
+                    </article>
+
+                    <article
+                        class="rounded-2xl border border-gray-100
+                               bg-gray-50 p-6"
+                    >
+                        <div
+                            class="w-11 h-11 rounded-xl bg-orange-100
+                                   text-orange-600 flex items-center
+                                   justify-center"
+                        >
+                            <svg
+                                class="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M9 17v-2a4 4 0 014-4h4
+                                       m0 0l-3-3m3 3l-3 3M5
+                                       21a2 2 0 01-2-2V5a2
+                                       2 0 012-2h6a2 2 0
+                                       012 2v4"
+                                />
+                            </svg>
+                        </div>
+
+                        <h3
+                            class="mt-4 font-bold text-gray-800"
+                        >
+                            Rekomendasi pendampingan
+                        </h3>
+
+                        <p
+                            class="mt-2 text-sm leading-relaxed
+                                   text-gray-500"
+                        >
+                            Guru memperoleh rekomendasi awal berdasarkan
+                            kategori dan tingkat risiko siswa.
+                        </p>
+                    </article>
+
+                    <article
+                        class="rounded-2xl border border-gray-100
+                               bg-gray-50 p-6"
+                    >
+                        <div
+                            class="w-11 h-11 rounded-xl bg-green-100
+                                   text-green-600 flex items-center
+                                   justify-center"
+                        >
+                            <svg
+                                class="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                                />
+                            </svg>
+                        </div>
+
+                        <h3
+                            class="mt-4 font-bold text-gray-800"
+                        >
+                            Monitoring berkelanjutan
+                        </h3>
+
+                        <p
+                            class="mt-2 text-sm leading-relaxed
+                                   text-gray-500"
+                        >
+                            Perkembangan siswa dapat dicatat untuk melihat
+                            kondisi membaik, tetap, atau memburuk.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- Fitur --}}
+    <section
+        id="fitur"
+        class="py-20 bg-gray-50"
+    >
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+            <div class="max-w-3xl mx-auto text-center">
+                <p
+                    class="text-sm font-bold uppercase tracking-wider
+                           text-teal-600"
+                >
+                    Fitur Utama
+                </p>
+
+                <h2
+                    class="mt-3 text-3xl sm:text-4xl font-black
+                           tracking-tight text-gray-900"
+                >
+                    Satu platform untuk deteksi, pendampingan,
+                    dan evaluasi.
+                </h2>
+
+                <p
+                    class="mt-4 text-base leading-relaxed text-gray-600"
+                >
+                    Seluruh alur dirancang agar siswa dapat bercerita
+                    dengan aman dan guru dapat bertindak secara lebih
+                    terarah.
+                </p>
+            </div>
+
+            <div
+                class="mt-12 grid grid-cols-1 md:grid-cols-2
+                       lg:grid-cols-3 gap-6"
+            >
+                @php
+                    $fitur = [
+                        [
+                            'nomor' => '01',
+                            'judul' => 'Check-in Mingguan',
+                            'deskripsi' =>
+                                'Membantu siswa menyampaikan kondisi keamanan, emosi, interaksi sosial, dan pengalaman belajar secara berkala.',
+                        ],
+                        [
+                            'nomor' => '02',
+                            'judul' => 'Safe Report',
+                            'deskripsi' =>
+                                'Pelaporan kejadian tidak nyaman atau perundungan dengan dukungan pilihan anonim dan informasi kejadian terstruktur.',
+                        ],
+                        [
+                            'nomor' => '03',
+                            'judul' => 'Analisis IndoBERT',
+                            'deskripsi' =>
+                                'Teks laporan dianalisis ke dalam kategori fisik, verbal, sosial, siber, atau bukan perundungan.',
+                        ],
+                        [
+                            'nomor' => '04',
+                            'judul' => 'Heatmap Risiko',
+                            'deskripsi' =>
+                                'Guru dapat melihat gambaran kondisi kelas dan memprioritaskan siswa yang membutuhkan perhatian.',
+                        ],
+                        [
+                            'nomor' => '05',
+                            'judul' => 'Rekomendasi Pendampingan',
+                            'deskripsi' =>
+                                'Sistem menghasilkan rekomendasi awal, sementara keputusan akhir tetap berada pada guru.',
+                        ],
+                        [
+                            'nomor' => '06',
+                            'judul' => 'Monitoring Intervensi',
+                            'deskripsi' =>
+                                'Tindak lanjut dan perubahan kondisi siswa dicatat dalam timeline yang terstruktur.',
+                        ],
+                    ];
+                @endphp
+
+                @foreach ($fitur as $item)
+                    <article
+                        class="group rounded-3xl border border-gray-100
+                               bg-white p-6 shadow-sm
+                               hover:-translate-y-1 hover:shadow-lg
+                               transition-all"
+                    >
+                        <div
+                            class="flex items-center justify-between"
+                        >
+                            <span
+                                class="text-3xl font-black text-teal-100
+                                       group-hover:text-teal-200
+                                       transition-colors"
+                            >
+                                {{ $item['nomor'] }}
+                            </span>
+
+                            <div
+                                class="w-10 h-10 rounded-xl bg-teal-50
+                                       flex items-center justify-center"
+                            >
+                                <svg
+                                    class="w-5 h-5 text-teal-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5 13l4 4L19 7"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <h3
+                            class="mt-5 text-lg font-bold text-gray-900"
+                        >
+                            {{ $item['judul'] }}
+                        </h3>
+
+                        <p
+                            class="mt-3 text-sm leading-relaxed
+                                   text-gray-500"
+                        >
+                            {{ $item['deskripsi'] }}
+                        </p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    {{-- Alur --}}
+    <section
+        id="alur"
+        class="py-20 bg-white"
+    >
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+            <div class="max-w-3xl">
+                <p
+                    class="text-sm font-bold uppercase tracking-wider
+                           text-teal-600"
+                >
+                    Cara Kerja
+                </p>
+
+                <h2
+                    class="mt-3 text-3xl sm:text-4xl font-black
+                           tracking-tight text-gray-900"
+                >
+                    Dari suara siswa menjadi tindakan nyata.
+                </h2>
+
+                <p
+                    class="mt-4 text-base leading-relaxed text-gray-600"
+                >
+                    SahabatKelas membangun alur pendampingan yang
+                    terhubung dari pengumpulan informasi hingga
+                    monitoring perubahan kondisi siswa.
+                </p>
+            </div>
+
+            <div
+                class="mt-12 grid grid-cols-1 md:grid-cols-5 gap-4"
+            >
+                @php
+                    $alur = [
+                        [
+                            'angka' => '1',
+                            'judul' => 'Siswa Mengisi',
+                            'deskripsi' =>
+                                'Check-in dan Safe Report.',
+                        ],
+                        [
+                            'angka' => '2',
+                            'judul' => 'AI Menganalisis',
+                            'deskripsi' =>
+                                'Indikasi laporan diklasifikasikan.',
+                        ],
+                        [
+                            'angka' => '3',
+                            'judul' => 'Risiko Dipetakan',
+                            'deskripsi' =>
+                                'Data digabung menjadi tingkat risiko.',
+                        ],
+                        [
+                            'angka' => '4',
+                            'judul' => 'Guru Bertindak',
+                            'deskripsi' =>
+                                'Rekomendasi dipilih dan dilaksanakan.',
+                        ],
+                        [
+                            'angka' => '5',
+                            'judul' => 'Kondisi Dimonitor',
+                            'deskripsi' =>
+                                'Perubahan siswa dicatat berkala.',
+                        ],
+                    ];
+                @endphp
+
+                @foreach ($alur as $item)
+                    <article
+                        class="relative rounded-2xl border
+                               border-gray-100 bg-gray-50 p-5"
+                    >
+                        <div
+                            class="w-10 h-10 rounded-full bg-teal-600
+                                   text-white flex items-center
+                                   justify-center font-bold"
+                        >
+                            {{ $item['angka'] }}
+                        </div>
+
+                        <h3
+                            class="mt-4 font-bold text-gray-900"
+                        >
+                            {{ $item['judul'] }}
+                        </h3>
+
+                        <p
+                            class="mt-2 text-sm leading-relaxed
+                                   text-gray-500"
+                        >
+                            {{ $item['deskripsi'] }}
+                        </p>
+
+                        @if (!$loop->last)
+                            <div
+                                class="hidden md:flex absolute
+                                       -right-4 top-1/2 -translate-y-1/2
+                                       z-10 w-8 h-8 rounded-full bg-white
+                                       border border-gray-200
+                                       items-center justify-center"
+                            >
+                                <svg
+                                    class="w-4 h-4 text-teal-500"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </div>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    {{-- Pengguna --}}
+    <section
+        id="pengguna"
+        class="py-20 bg-slate-900"
+    >
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+            <div class="max-w-3xl mx-auto text-center">
+                <p
+                    class="text-sm font-bold uppercase tracking-wider
+                           text-teal-400"
+                >
+                    Dirancang untuk Ekosistem Sekolah
+                </p>
+
+                <h2
+                    class="mt-3 text-3xl sm:text-4xl font-black
+                           tracking-tight text-white"
+                >
+                    Setiap pengguna mendapatkan fungsi sesuai
+                    kebutuhannya.
+                </h2>
+            </div>
+
+            <div
+                class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"
+            >
+                {{-- Siswa --}}
+                <article
+                    class="rounded-3xl border border-white/10
+                           bg-white/5 p-7 backdrop-blur-sm"
+                >
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-500/20
+                               text-blue-300 flex items-center
+                               justify-center"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 14l9-5-9-5-9 5 9
+                                   5zm0 0l6.16-3.422A12.083
+                                   12.083 0 0118 15.5c0
+                                   1.232.186 2.421.532
+                                   3.54L12 22l-6.532-2.96A11.952
+                                   11.952 0 006 15.5c0-1.736
+                                   -.366-3.386-1.024-4.878L12 14z"
+                            />
+                        </svg>
+                    </div>
+
+                    <h3 class="mt-5 text-xl font-bold text-white">
+                        Siswa
+                    </h3>
+
+                    <p
+                        class="mt-3 text-sm leading-relaxed
+                               text-slate-300"
+                    >
+                        Mengisi check-in mingguan dan mengirim laporan
+                        secara aman ketika mengalami atau menyaksikan
+                        kejadian tidak nyaman.
+                    </p>
+                </article>
+
+                {{-- Guru --}}
+                <article
+                    class="rounded-3xl border border-teal-400/30
+                           bg-teal-500/10 p-7 backdrop-blur-sm"
+                >
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-teal-500/20
+                               text-teal-300 flex items-center
+                               justify-center"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M5.121 17.804A9.003
+                                   9.003 0 0112 15c2.625
+                                   0 4.987 1.123 6.629
+                                   2.916M15 11a3 3 0
+                                   11-6 0 3 3 0 016
+                                   0zm6 1a9 9 0
+                                   11-18 0 9 9 0 0118 0z"
+                            />
+                        </svg>
+                    </div>
+
+                    <h3 class="mt-5 text-xl font-bold text-white">
+                        Guru BK dan Wali Kelas
+                    </h3>
+
+                    <p
+                        class="mt-3 text-sm leading-relaxed
+                               text-slate-300"
+                    >
+                        Memantau heatmap, melihat prioritas risiko,
+                        memperoleh rekomendasi, mencatat tindak lanjut,
+                        dan melakukan monitoring.
+                    </p>
+                </article>
+
+                {{-- Admin --}}
+                <article
+                    class="rounded-3xl border border-white/10
+                           bg-white/5 p-7 backdrop-blur-sm"
+                >
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-violet-500/20
+                               text-violet-300 flex items-center
+                               justify-center"
+                    >
+                        <svg
+                            class="w-6 h-6"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9.75 3a.75.75 0
+                                   01.75.75V5h3V3.75a.75.75
+                                   0 011.5 0V5h.75A2.25
+                                   2.25 0 0118 7.25v.75h1.25
+                                   a.75.75 0 010 1.5H18v3h1.25
+                                   a.75.75 0 010 1.5H18v.75A2.25
+                                   2.25 0 0115.75 17H15v1.25
+                                   a.75.75 0 01-1.5 0V17h-3
+                                   v1.25a.75.75 0 01-1.5 0V17
+                                   h-.75A2.25 2.25 0 016 14.75V14
+                                   H4.75a.75.75 0 010-1.5H6v-3
+                                   H4.75a.75.75 0 010-1.5H6v-.75
+                                   A2.25 2.25 0 018.25 5H9V3.75
+                                   A.75.75 0 019.75 3z"
+                            />
+                        </svg>
+                    </div>
+
+                    <h3 class="mt-5 text-xl font-bold text-white">
+                        Administrator
+                    </h3>
+
+                    <p
+                        class="mt-3 text-sm leading-relaxed
+                               text-slate-300"
+                    >
+                        Mengelola akun, data guru, siswa, kelas, serta
+                        memastikan data operasional platform tetap
+                        terorganisasi.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    {{-- Privasi --}}
+    <section class="py-20 bg-white">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+            <div
+                class="rounded-3xl border border-teal-100
+                       bg-gradient-to-r from-teal-50 to-blue-50
+                       p-7 sm:p-10"
+            >
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-3
+                           items-center gap-8"
+                >
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-teal-600
+                               flex items-center justify-center"
+                    >
+                        <svg
+                            class="w-8 h-8 text-white"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M12 15v2m-6 4h12a2 2
+                                   0 002-2v-6a2 2 0 00-2
+                                   -2H6a2 2 0 00-2 2v6a2
+                                   2 0 002 2zm10-10V7a4
+                                   4 0 00-8 0v4h8z"
+                            />
+                        </svg>
+                    </div>
+
+                    <div class="lg:col-span-2">
+                        <h2
+                            class="text-2xl sm:text-3xl font-black
+                                   text-gray-900"
+                        >
+                            Teknologi mendukung keputusan, bukan
+                            menggantikan peran guru.
+                        </h2>
+
+                        <p
+                            class="mt-4 text-sm sm:text-base
+                                   leading-relaxed text-gray-600"
+                        >
+                            Hasil analisis SahabatKelas berfungsi sebagai
+                            informasi pendukung. Penilaian, verifikasi,
+                            dan keputusan tindak lanjut tetap dilakukan
+                            oleh guru atau pihak sekolah yang berwenang.
+                            Identitas laporan anonim tidak ditampilkan
+                            sebagai identitas pelapor.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {{-- CTA --}}
+    <section class="pb-20 bg-white">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        >
+            <div
+                class="relative overflow-hidden rounded-3xl
+                       bg-teal-600 px-6 py-12 sm:px-12
+                       text-center shadow-xl shadow-teal-200"
+            >
+                <div
+                    class="absolute -top-20 -left-20 w-60 h-60
+                           rounded-full bg-white/10"
+                ></div>
+
+                <div
+                    class="absolute -bottom-24 -right-20 w-72 h-72
+                           rounded-full bg-white/10"
+                ></div>
+
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <h2
+                        class="text-3xl sm:text-4xl font-black
+                               text-white"
+                    >
+                        Bersama membangun kelas yang lebih aman,
+                        peduli, dan suportif.
+                    </h2>
+
+                    <p
+                        class="mt-4 text-base leading-relaxed
+                               text-teal-50"
+                    >
+                        Gunakan SahabatKelas untuk mendukung deteksi dini,
+                        pendampingan personal, dan pemantauan kondisi
+                        siswa secara berkelanjutan.
+                    </p>
+
+                    <a
+                        href="{{ $dashboardRoute }}"
+                        class="mt-7 inline-flex items-center justify-center
+                               gap-2 rounded-xl bg-white px-6 py-3.5
+                               text-sm font-bold text-teal-700
+                               hover:bg-teal-50 transition-colors"
+                    >
+                        {{ $dashboardLabel }}
+
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 5l7 7-7 7"
+                            />
+                        </svg>
                     </a>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Stats Banner -->
-    <section id="statistik" class="py-20 bg-gradient-to-r from-teal-600 to-blue-700 text-white relative overflow-hidden mt-12">
-        <!-- Decorative bg -->
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 32px 32px;"></div>
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-white/20">
-                
-                <div class="text-center px-4">
-                    <div class="flex justify-center mb-4">
-                        <div class="w-16 h-16 bg-white/20 rounded-2xl backdrop-blur flex items-center justify-center text-white">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                        </div>
-                    </div>
-                    <div class="text-4xl lg:text-5xl font-black mb-2">500+</div>
-                    <div class="text-teal-100 font-semibold tracking-wide uppercase text-sm">Total Jurnal</div>
-                </div>
-
-                <div class="text-center px-4">
-                    <div class="flex justify-center mb-4">
-                        <div class="w-16 h-16 bg-white/20 rounded-2xl backdrop-blur flex items-center justify-center text-white">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        </div>
-                    </div>
-                    <div class="text-4xl lg:text-5xl font-black mb-2">1900+</div>
-                    <div class="text-teal-100 font-semibold tracking-wide uppercase text-sm">Siswa Aktif</div>
-                </div>
-
-                <div class="text-center px-4">
-                    <div class="flex justify-center mb-4">
-                        <div class="w-16 h-16 bg-white/20 rounded-2xl backdrop-blur flex items-center justify-center text-white">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                        </div>
-                    </div>
-                    <div class="text-4xl lg:text-5xl font-black mb-2">750+</div>
-                    <div class="text-teal-100 font-semibold tracking-wide uppercase text-sm">Guru & BK</div>
-                </div>
-
-                <div class="text-center px-4">
-                    <div class="flex justify-center mb-4">
-                        <div class="w-16 h-16 bg-white/20 rounded-2xl backdrop-blur flex items-center justify-center text-white">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-                        </div>
-                    </div>
-                    <div class="text-4xl lg:text-5xl font-black mb-2">30+</div>
-                    <div class="text-teal-100 font-semibold tracking-wide uppercase text-sm">Sekolah Mitra</div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- News / Articles Section -->
-    <section id="artikel" class="py-24 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
-            <p class="text-orange-500 font-bold uppercase tracking-wider mb-2">INFORMASI & ARTIKEL</p>
-            <h2 class="text-4xl font-black text-gray-900 mb-4">Mari Simak Kabar Terkini</h2>
-            <p class="text-gray-500 max-w-2xl mx-auto">Berita, tips, dan panduan edukasi untuk mencegah perundungan serta menjaga kesejahteraan mental peserta didik.</p>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- Article 1 -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-md shadow-gray-200/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 flex flex-col group">
-                    <div class="relative overflow-hidden h-56">
-                        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=2070&auto=format&fit=crop" alt="Edukasi" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">Edukasi</div>
-                    </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex items-center gap-4 text-xs text-gray-400 font-medium mb-4">
-                            <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 18 Jul 2026</span>
-                            <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Admin</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-snug">Cara Mengenali Tanda Perundungan Terselubung di Kelas</h3>
-                        <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">Tidak semua perundungan bersifat fisik. Perundungan verbal dan pengucilan seringkali tidak terlihat oleh guru. Kenali gejalanya sejak dini...</p>
-                        <a href="#" class="mt-auto inline-flex items-center text-blue-600 font-bold text-sm hover:text-blue-800 transition-colors">
-                            Baca Selengkapnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Article 2 -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-md shadow-gray-200/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 flex flex-col group">
-                    <div class="relative overflow-hidden h-56">
-                        <img src="https://images.unsplash.com/photo-1571260899304-425dea4cf863?q=80&w=2072&auto=format&fit=crop" alt="Kesehatan Mental" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute top-4 left-4 bg-teal-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">Psikologi</div>
-                    </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex items-center gap-4 text-xs text-gray-400 font-medium mb-4">
-                            <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 15 Jul 2026</span>
-                            <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Tim BK</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-snug">Pentingnya Ruang Aman untuk Pemulihan Emosional</h3>
-                        <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">Siswa membutuhkan lingkungan di mana mereka merasa diterima dan tidak dihakimi. Bagaimana sekolah bisa menjadi ruang aman tersebut?</p>
-                        <a href="#" class="mt-auto inline-flex items-center text-blue-600 font-bold text-sm hover:text-blue-800 transition-colors">
-                            Baca Selengkapnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Article 3 -->
-                <div class="bg-white rounded-3xl overflow-hidden shadow-md shadow-gray-200/50 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 flex flex-col group">
-                    <div class="relative overflow-hidden h-56">
-                        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="Kolaborasi" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                        <div class="absolute top-4 left-4 bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg">Tips</div>
-                    </div>
-                    <div class="p-8 flex flex-col flex-grow">
-                        <div class="flex items-center gap-4 text-xs text-gray-400 font-medium mb-4">
-                            <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg> 10 Jul 2026</span>
-                            <span class="flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Edukasi</span>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors leading-snug">Membangun Empati di Antara Peserta Didik Sejak Dini</h3>
-                        <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed">Cara efektif mencegah perundungan adalah dengan menanamkan empati. Berbagai kegiatan kolaboratif di kelas dapat mewujudkannya.</p>
-                        <a href="#" class="mt-auto inline-flex items-center text-blue-600 font-bold text-sm hover:text-blue-800 transition-colors">
-                            Baca Selengkapnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
 </main>
 
-<footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center md:text-left">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center gap-3 mb-4 justify-center md:justify-start">
-                    <div class="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center text-white font-black text-xl">S</div>
-                    <span class="text-xl font-black text-white">SahabatKelas<span class="text-teal-500">.</span></span>
-                </div>
-                <p class="text-slate-400 mb-6 max-w-sm mx-auto md:mx-0">Menjadi teman setia dalam mendeteksi dan mencegah perundungan, demi masa depan pendidikan yang lebih baik.</p>
+{{-- Footer --}}
+<footer class="border-t border-gray-100 bg-gray-50">
+    <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+               py-8 flex flex-col md:flex-row
+               md:items-center md:justify-between gap-5"
+    >
+        <div class="flex items-center gap-3">
+            <div
+                class="w-9 h-9 rounded-xl bg-teal-600
+                       text-white flex items-center justify-center"
+            >
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 10h.01M12 10h.01M16
+                           10h.01M9 16H5a2 2 0
+                           01-2-2V6a2 2 0 012-2h14
+                           a2 2 0 012 2v8a2 2 0
+                           01-2 2h-5l-3 3v-3z"
+                    />
+                </svg>
             </div>
+
             <div>
-                <h4 class="text-white font-bold mb-4">Tautan Cepat</h4>
-                <ul class="space-y-2">
-                    <li><a href="#beranda" class="hover:text-teal-400 transition-colors">Beranda</a></li>
-                    <li><a href="#tentang" class="hover:text-teal-400 transition-colors">Tentang Kami</a></li>
-                    <li><a href="#statistik" class="hover:text-teal-400 transition-colors">Statistik</a></li>
-                    <li><a href="#artikel" class="hover:text-teal-400 transition-colors">Artikel & Berita</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-bold mb-4">Hubungi Kami</h4>
-                <ul class="space-y-2">
-                    <li class="flex items-center gap-2 justify-center md:justify-start"><svg class="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> info@sahabatkelas.id</li>
-                    <li class="flex items-center gap-2 justify-center md:justify-start"><svg class="w-4 h-4 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> 0812-3456-7890</li>
-                </ul>
+                <p class="font-bold text-gray-900">
+                    SahabatKelas
+                </p>
+
+                <p class="text-xs text-gray-500">
+                    Platform Intelligent Student Insight
+                </p>
             </div>
         </div>
-        <div class="border-t border-slate-800 pt-8 text-center text-sm text-slate-500">
-            &copy; {{ date('Y') }} SahabatKelas. Hak cipta dilindungi.
-        </div>
+
+        <p class="text-sm text-gray-500">
+            © {{ now()->year }} SahabatKelas.
+            Dikembangkan untuk inovasi pendidikan.
+        </p>
     </div>
 </footer>
-
-<script>
-    // Simple script to add shadow to navbar on scroll
-    window.addEventListener('scroll', () => {
-        const header = document.querySelector('header');
-        if (window.scrollY > 20) {
-            header.classList.add('shadow-md', 'bg-white/95');
-            header.classList.remove('bg-white/50');
-        } else {
-            header.classList.remove('shadow-md');
-            header.classList.add('bg-white/50');
-        }
-    });
-</script>
-
 </body>
 </html>
