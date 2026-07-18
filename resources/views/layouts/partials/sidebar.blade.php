@@ -21,17 +21,31 @@
     class="fixed inset-y-0 left-0 z-50 w-64 bg-teal-800 border-r border-teal-900 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 flex flex-col h-screen text-white shadow-xl"
 >
     <!-- Header Sidebar -->
-    <div id="sidebar-header" class="h-16 flex items-center justify-between px-6 border-b border-teal-700/50 flex-shrink-0 transition-all duration-300">
-        <div class="flex items-center gap-3">
-            <img src="/img/logo.png" alt="Logo" class="w-8 h-8 object-contain bg-white rounded-full p-0.5">
-            <span id="sidebar-logo-text" class="text-lg font-bold text-white transition-opacity duration-300">SahabatKelas</span>
+    <div id="sidebar-header" class="h-16 flex items-center border-b border-teal-700/50 flex-shrink-0 relative w-full transition-all duration-300">
+        
+        <!-- Expanded Header Content (Logo + X Button) -->
+        <div class="sidebar-expanded-content flex items-center justify-between w-full px-6 transition-opacity duration-300">
+            <div class="flex items-center gap-3">
+                <img src="/img/logo.png" alt="Logo" class="w-8 h-8 object-contain bg-white rounded-full p-0.5">
+                <span class="text-lg font-bold text-white whitespace-nowrap">SahabatKelas</span>
+            </div>
+            
+            <!-- Tombol Close (X) untuk Desktop & Mobile -->
+            <button onclick="toggleSidebar()" class="text-teal-200 hover:text-white focus:outline-none p-1 rounded-md hover:bg-teal-700 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
         </div>
-        <!-- Tombol Close Mobile -->
-        <button onclick="toggleSidebar()" class="lg:hidden text-teal-200 hover:text-white focus:outline-none p-1 rounded-md hover:bg-teal-700">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
+
+        <!-- Collapsed Header Content (Hamburger Icon Only) -->
+        <div class="sidebar-collapsed-content absolute inset-0 flex items-center justify-center transition-opacity duration-300">
+            <button onclick="toggleSidebar()" class="text-teal-200 hover:text-white focus:outline-none p-2 rounded-md hover:bg-teal-700 transition-colors hidden lg:block">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
     </div>
 
     <!-- Menu Scrollable -->

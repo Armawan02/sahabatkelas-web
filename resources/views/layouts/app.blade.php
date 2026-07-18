@@ -17,13 +17,23 @@
                 width: 5rem; /* w-20 */
             }
             html.sidebar-collapsed .sidebar-text,
-            html.sidebar-collapsed #sidebar-logo-text,
             html.sidebar-collapsed .sidebar-group-title {
                 display: none;
                 opacity: 0;
             }
+            html.sidebar-collapsed .sidebar-expanded-content {
+                opacity: 0;
+                pointer-events: none;
+            }
+            html.sidebar-collapsed .sidebar-collapsed-content {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            html:not(.sidebar-collapsed) .sidebar-collapsed-content {
+                opacity: 0;
+                pointer-events: none;
+            }
             html.sidebar-collapsed #sidebar-header {
-                justify-content: center;
                 padding-left: 0;
                 padding-right: 0;
             }
