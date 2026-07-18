@@ -30,7 +30,7 @@
 @endphp
 
 <!-- Navbar -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm transition-all duration-300">
+<header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/60 backdrop-blur-lg border-b border-white/20">
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <div class="flex items-center gap-3">
             <img src="/img/logo.png" alt="Logo" class="h-8 w-auto">
@@ -93,7 +93,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <!-- Card 1 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-teal-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+            <div class="bg-white/80 backdrop-blur-lg border border-white/50 rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-t-teal-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
                 <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-teal-50 transition-colors">01</div>
                 <div class="w-14 h-14 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mb-6 relative z-10">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -103,7 +103,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-blue-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+            <div class="bg-white/80 backdrop-blur-lg border border-white/50 rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-t-blue-500 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
                 <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-blue-50 transition-colors">02</div>
                 <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 relative z-10">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
@@ -113,7 +113,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-yellow-400 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+            <div class="bg-white/80 backdrop-blur-lg border border-white/50 rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-t-yellow-400 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
                 <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-yellow-50 transition-colors">03</div>
                 <div class="w-14 h-14 bg-yellow-50 text-yellow-600 rounded-2xl flex items-center justify-center mb-6 relative z-10">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
@@ -123,7 +123,7 @@
             </div>
 
             <!-- Card 4 -->
-            <div class="bg-white rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-teal-600 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
+            <div class="bg-white/80 backdrop-blur-lg border border-white/50 rounded-2xl p-8 shadow-xl shadow-gray-200/50 border-t-4 border-t-teal-600 hover:-translate-y-2 transition-transform duration-300 relative overflow-hidden group">
                 <div class="absolute top-0 right-0 p-4 text-6xl font-black text-gray-50 opacity-50 group-hover:text-teal-50 transition-colors">04</div>
                 <div class="w-14 h-14 bg-teal-50 text-teal-700 rounded-2xl flex items-center justify-center mb-6 relative z-10">
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
@@ -408,11 +408,11 @@
     window.addEventListener('scroll', () => {
         const header = document.querySelector('header');
         if (window.scrollY > 20) {
-            header.classList.add('shadow-md', 'bg-white/95');
-            header.classList.remove('bg-white/50');
+            header.classList.add('shadow-md', 'bg-white/85');
+            header.classList.remove('bg-white/60');
         } else {
-            header.classList.remove('shadow-md');
-            header.classList.add('bg-white/50');
+            header.classList.remove('shadow-md', 'bg-white/85');
+            header.classList.add('bg-white/60');
         }
     });
 
