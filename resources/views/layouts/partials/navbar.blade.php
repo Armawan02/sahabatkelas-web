@@ -37,12 +37,18 @@
         class="max-w-7xl mx-auto px-4 py-3
                flex justify-between items-center gap-4"
     >
-        {{-- Logo --}}
-        <a
-            href="{{ $homeUrl }}"
-            class="text-xl font-bold text-teal-700
-                   flex items-center gap-2 shrink-0"
-        >
+        {{-- Hamburger & Logo --}}
+        <div class="flex items-center gap-3">
+            <button onclick="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-gray-700 focus:outline-none p-1 rounded-md hover:bg-gray-100 shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <a
+                href="{{ $homeUrl }}"
+                class="text-xl font-bold text-teal-700
+                       flex items-center gap-2 shrink-0"
+            >
             <img src="/img/logo.png" alt="Logo" class="w-9 h-9 object-contain">
 
             <span class="hidden sm:inline">
@@ -86,150 +92,6 @@
             </div>
         @endauth
     </div>
-
-    {{-- Navigasi role --}}
-    @auth
-        <div class="border-t border-gray-100 bg-gray-50/70">
-            <div
-                class="max-w-7xl mx-auto px-4 py-2
-                       flex items-center gap-6 overflow-x-auto
-                       text-sm font-medium whitespace-nowrap
-                       hide-scrollbar"
-            >
-
-                {{-- Menu Admin --}}
-                @if ($user->role === 'admin')
-                    <a
-                        href="{{ route('admin.dashboard') }}"
-                        class="py-1.5 transition-colors
-                            {{ request()->routeIs('admin.dashboard')
-                                ? $kelasAktif
-                                : $kelasTidakAktif }}"
-                    >
-                        Dashboard
-                    </a>
-
-                    @if (Route::has('admin.users.index'))
-                        <a
-                            href="{{ route('admin.users.index') }}"
-                            class="py-1.5 transition-colors
-                                {{ request()->routeIs('admin.users.*')
-                                    ? $kelasAktif
-                                    : $kelasTidakAktif }}"
-                        >
-                            Kelola Akun
-                        </a>
-                    @endif
-
-                    @if (Route::has('admin.kelas.index'))
-                        <a
-                            href="{{ route('admin.kelas.index') }}"
-                            class="py-1.5 transition-colors
-                                {{ request()->routeIs('admin.kelas.*')
-                                    ? $kelasAktif
-                                    : $kelasTidakAktif }}"
-                        >
-                            Data Kelas
-                        </a>
-                    @endif
-
-                    @if (Route::has('admin.siswa.index'))
-                        <a
-                            href="{{ route('admin.siswa.index') }}"
-                            class="py-1.5 transition-colors
-                                {{ request()->routeIs('admin.siswa.*')
-                                    ? $kelasAktif
-                                    : $kelasTidakAktif }}"
-                        >
-                            Data Siswa
-                        </a>
-                    @endif
-
-                    @if (Route::has('admin.guru.index'))
-                        <a
-                            href="{{ route('admin.guru.index') }}"
-                            class="py-1.5 transition-colors
-                                {{ request()->routeIs('admin.guru.*')
-                                    ? $kelasAktif
-                                    : $kelasTidakAktif }}"
-                        >
-                            Data Guru
-                        </a>
-                    @endif
-
-                {{-- Menu Guru --}}
-                @elseif ($user->role === 'guru')
-                    <a
-                        href="{{ route('guru.dashboard') }}"
-                        class="py-1.5 transition-colors
-                            {{ request()->routeIs('guru.dashboard')
-                                ? $kelasAktif
-                                : $kelasTidakAktif }}"
-                    >
-                        Dashboard
-                    </a>
-
-                    <a
-                        href="{{ route('guru.heatmap') }}"
-                        class="py-1.5 transition-colors
-                            {{ request()->routeIs(
-                                'guru.heatmap',
-                                'guru.siswa.detail'
-                            )
-                                ? $kelasAktif
-                                : $kelasTidakAktif }}"
-                    >
-                        Heatmap Kelas
-                    </a>
-
-                    <a
-                        href="{{ route('guru.tindak-lanjut.index') }}"
-                        class="py-1.5 transition-colors
-                            {{ request()->routeIs(
-                                'guru.tindak-lanjut.*',
-                                'guru.monitoring.*'
-                            )
-                                ? $kelasAktif
-                                : $kelasTidakAktif }}"
-                    >
-                        Tindak Lanjut
-                    </a>
-
-                {{-- Menu Siswa --}}
-                @elseif ($user->role === 'siswa')
-                    <a
-                        href="{{ route('siswa.beranda') }}"
-                        class="py-1.5 transition-colors
-                            {{ request()->routeIs('siswa.beranda')
-                                ? $kelasAktif
-                                : $kelasTidakAktif }}"
-                    >
-                        Beranda
-                    </a>
-
-                    <a
-                        href="{{ route('siswa.checkin.create') }}"
-                        class="py-1.5 transition-colors
-                            {{ request()->routeIs('siswa.checkin.*')
-                                ? $kelasAktif
-                                : $kelasTidakAktif }}"
-                    >
-                        Check-in
-                    </a>
-
-                    <a
-                        href="{{ route('siswa.report.create') }}"
-                        class="py-1.5 transition-colors
-                            {{ request()->routeIs('siswa.report.*')
-                                ? $kelasAktif
-                                : $kelasTidakAktif }}"
-                    >
-                        Safe Report
-                    </a>
-                @endif
-            </div>
-        </div>
-    @endauth
 </nav>
 
 <style>

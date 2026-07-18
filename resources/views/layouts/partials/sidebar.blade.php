@@ -1,0 +1,148 @@
+@php
+    $user = auth()->user();
+    
+    $kelasAktif = 'bg-teal-50 text-teal-700 font-semibold';
+    $kelasTidakAktif = 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium';
+    $iconAktif = 'text-teal-600';
+    $iconTidakAktif = 'text-gray-400 group-hover:text-gray-500';
+@endphp
+
+<!-- Overlay untuk mobile -->
+<div 
+    id="sidebar-overlay" 
+    class="fixed inset-0 bg-gray-900/50 z-40 lg:hidden hidden transition-opacity duration-300 opacity-0"
+    onclick="toggleSidebar()"
+></div>
+
+<!-- Sidebar -->
+<aside 
+    id="sidebar" 
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 transition-transform duration-300 ease-in-out flex flex-col h-screen"
+>
+    <!-- Header Sidebar (Khusus Mobile, bisa diklik untuk close) -->
+    <div class="h-16 flex items-center justify-between px-6 border-b border-gray-100 lg:hidden">
+        <div class="flex items-center gap-3">
+            <img src="/img/logo.png" alt="Logo" class="w-8 h-8 object-contain">
+            <span class="text-lg font-bold text-teal-700">SahabatKelas</span>
+        </div>
+        <button onclick="toggleSidebar()" class="text-gray-500 hover:text-gray-700 focus:outline-none p-1 rounded-md hover:bg-gray-100">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Menu Scrollable -->
+    <div class="flex-1 overflow-y-auto py-6 px-4 space-y-1 scrollbar-thin scrollbar-thumb-gray-200">
+        
+        {{-- Menu Admin --}}
+        @if ($user->role === 'admin')
+            <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Menu Utama</p>
+            
+            <a href="{{ route('admin.dashboard') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('admin.dashboard') ? $kelasAktif : $kelasTidakAktif }}">
+                <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('admin.dashboard') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+                Dashboard
+            </a>
+
+            @if (Route::has('admin.users.index'))
+                <a href="{{ route('admin.users.index') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('admin.users.*') ? $kelasAktif : $kelasTidakAktif }}">
+                    <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('admin.users.*') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    Kelola Akun
+                </a>
+            @endif
+
+            <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 mt-6">Data Master</p>
+            
+            @if (Route::has('admin.kelas.index'))
+                <a href="{{ route('admin.kelas.index') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('admin.kelas.*') ? $kelasAktif : $kelasTidakAktif }}">
+                    <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('admin.kelas.*') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m3-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                    </svg>
+                    Data Kelas
+                </a>
+            @endif
+
+            @if (Route::has('admin.siswa.index'))
+                <a href="{{ route('admin.siswa.index') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('admin.siswa.*') ? $kelasAktif : $kelasTidakAktif }}">
+                    <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('admin.siswa.*') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                    </svg>
+                    Data Siswa
+                </a>
+            @endif
+
+            @if (Route::has('admin.guru.index'))
+                <a href="{{ route('admin.guru.index') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('admin.guru.*') ? $kelasAktif : $kelasTidakAktif }}">
+                    <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('admin.guru.*') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Data Guru
+                </a>
+            @endif
+
+        {{-- Menu Guru --}}
+        @elseif ($user->role === 'guru')
+            <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Menu Utama</p>
+            
+            <a href="{{ route('guru.dashboard') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('guru.dashboard') ? $kelasAktif : $kelasTidakAktif }}">
+                <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('guru.dashboard') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+                Dashboard
+            </a>
+
+            <a href="{{ route('guru.heatmap') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('guru.heatmap', 'guru.siswa.detail') ? $kelasAktif : $kelasTidakAktif }}">
+                <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('guru.heatmap', 'guru.siswa.detail') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Heatmap Kelas
+            </a>
+
+            <a href="{{ route('guru.tindak-lanjut.index') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('guru.tindak-lanjut.*', 'guru.monitoring.*') ? $kelasAktif : $kelasTidakAktif }}">
+                <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('guru.tindak-lanjut.*', 'guru.monitoring.*') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                Tindak Lanjut
+            </a>
+
+        {{-- Menu Siswa --}}
+        @elseif ($user->role === 'siswa')
+            <p class="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Menu Utama</p>
+            
+            <a href="{{ route('siswa.beranda') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('siswa.beranda') ? $kelasAktif : $kelasTidakAktif }}">
+                <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('siswa.beranda') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+                Beranda
+            </a>
+
+            <a href="{{ route('siswa.checkin.create') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('siswa.checkin.*') ? $kelasAktif : $kelasTidakAktif }}">
+                <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('siswa.checkin.*') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Check-in Harian
+            </a>
+
+            <a href="{{ route('siswa.report.create') }}" class="group flex items-center px-3 py-2.5 text-sm rounded-xl transition-all {{ request()->routeIs('siswa.report.*') ? $kelasAktif : $kelasTidakAktif }}">
+                <svg class="mr-3 w-5 h-5 flex-shrink-0 {{ request()->routeIs('siswa.report.*') ? $iconAktif : $iconTidakAktif }}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                Lapor Masalah (Safe Report)
+            </a>
+        @endif
+        
+    </div>
+    
+    <!-- Footer Sidebar -->
+    <div class="p-4 border-t border-gray-100">
+        <div class="bg-teal-50 rounded-xl p-4 flex flex-col items-center text-center">
+            <p class="text-xs font-semibold text-teal-800">Butuh Bantuan?</p>
+            <p class="text-[10px] text-teal-600 mt-1">Hubungi Administrator Sekolah Anda</p>
+        </div>
+    </div>
+</aside>
