@@ -40,7 +40,7 @@
             <div>
                 <img src="/img/logo.png" alt="Logo SahabatKelas" class="h-32 w-32 md:h-40 md:w-40 object-contain mx-auto mb-8 drop-shadow-xl">
                 <h1 class="text-4xl sm:text-5xl lg:text-5xl font-black tracking-tight text-gray-900 leading-tight">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600">Mengenali lebih awal,</span> <br>
+                    Mengenali lebih awal,<br>
                     mendampingi lebih terarah.
                 </h1>
                 <p class="mt-6 text-lg leading-relaxed text-gray-600">
