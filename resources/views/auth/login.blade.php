@@ -63,7 +63,7 @@
 
 <main id="beranda" class="pt-20">
     <!-- Hero Section -->
-    <section class="relative bg-slate-900 overflow-hidden min-h-[500px] flex items-center pt-24 pb-32 lg:pb-40">
+    <section class="relative bg-slate-900 overflow-hidden min-h-[500px] flex items-center pt-24 pb-20 lg:pb-40">
         <img src="/img/hero_students.png" alt="Siswa di Sekolah Bebas Perundungan" class="absolute inset-0 w-full h-full object-cover opacity-20" />
         
         <!-- Gradient Overlay -->
@@ -88,8 +88,8 @@
         </div>
     </section>
 
-    <!-- Feature Cards (Overlapping) -->
-    <section class="relative z-20 -mt-16 lg:-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+    <!-- Feature Cards (Overlapping on Desktop, Below on Mobile) -->
+    <section class="relative z-20 mt-12 lg:-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <!-- Card 1 -->
