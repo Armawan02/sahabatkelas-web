@@ -35,14 +35,8 @@
     {{-- Bagian atas --}}
     <div class="w-full mx-auto px-4 py-3 flex justify-between items-center gap-4">
         
-        {{-- Hamburger Menu Toggle (Hanya Mobile) --}}
-        <div class="flex items-center gap-3">
-            <button onclick="toggleSidebar()" class="lg:hidden text-gray-500 hover:text-teal-700 focus:outline-none p-2 rounded-md hover:bg-teal-50 shrink-0 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-        </div>
+        {{-- Spacer kiri agar layout rata (karena Hamburger pindah ke sidebar) --}}
+        <div></div>
 
         {{-- Informasi pengguna (Profil Dropdown) --}}
         @auth

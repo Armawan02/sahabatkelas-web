@@ -8,17 +8,10 @@
     $iconTidakAktif = 'text-teal-300 group-hover:text-white';
 @endphp
 
-<!-- Overlay untuk mobile -->
-<div 
-    id="sidebar-overlay" 
-    class="fixed inset-0 bg-gray-900/50 z-40 lg:hidden hidden transition-opacity duration-300 opacity-0"
-    onclick="toggleSidebar()"
-></div>
-
 <!-- Sidebar -->
 <aside 
     id="sidebar" 
-    class="fixed inset-y-0 left-0 z-50 w-64 bg-teal-800 border-r border-teal-900 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-0 flex flex-col h-screen text-white shadow-xl"
+    class="flex-shrink-0 z-50 w-64 bg-teal-800 border-r border-teal-900 flex flex-col h-screen text-white shadow-xl transition-all duration-300"
 >
     <!-- Header Sidebar -->
     <div id="sidebar-header" class="h-16 flex items-center border-b border-teal-700/50 flex-shrink-0 relative w-full transition-all duration-300">
@@ -40,7 +33,7 @@
 
         <!-- Collapsed Header Content (Hamburger Icon Only) -->
         <div class="sidebar-collapsed-content absolute inset-0 flex items-center justify-center transition-opacity duration-300">
-            <button onclick="toggleSidebar()" class="text-teal-200 hover:text-white focus:outline-none p-2 rounded-md hover:bg-teal-700 transition-colors hidden lg:block">
+            <button onclick="toggleSidebar()" class="text-teal-200 hover:text-white focus:outline-none p-2 rounded-md hover:bg-teal-700 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>

@@ -11,43 +11,41 @@
             transition: width 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
         
-        /* Desktop Collapsed State */
-        @media (min-width: 1024px) {
-            html.sidebar-collapsed #sidebar {
-                width: 5rem; /* w-20 */
-            }
-            html.sidebar-collapsed .sidebar-text,
-            html.sidebar-collapsed .sidebar-group-title {
-                display: none;
-                opacity: 0;
-            }
-            html.sidebar-collapsed .sidebar-expanded-content {
-                opacity: 0;
-                pointer-events: none;
-            }
-            html.sidebar-collapsed .sidebar-collapsed-content {
-                opacity: 1;
-                pointer-events: auto;
-            }
-            html:not(.sidebar-collapsed) .sidebar-collapsed-content {
-                opacity: 0;
-                pointer-events: none;
-            }
-            html.sidebar-collapsed #sidebar-header {
-                padding-left: 0;
-                padding-right: 0;
-            }
-            html.sidebar-collapsed .sidebar-menu-item {
-                justify-content: center;
-                padding-left: 0;
-                padding-right: 0;
-            }
-            html.sidebar-collapsed .sidebar-icon {
-                margin-right: 0;
-            }
-            html.sidebar-collapsed #sidebar-footer-box {
-                display: none;
-            }
+        /* Desktop & Mobile Collapsed State */
+        html.sidebar-collapsed #sidebar {
+            width: 5rem; /* w-20 */
+        }
+        html.sidebar-collapsed .sidebar-text,
+        html.sidebar-collapsed .sidebar-group-title {
+            display: none;
+            opacity: 0;
+        }
+        html.sidebar-collapsed .sidebar-expanded-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+        html.sidebar-collapsed .sidebar-collapsed-content {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        html:not(.sidebar-collapsed) .sidebar-collapsed-content {
+            opacity: 0;
+            pointer-events: none;
+        }
+        html.sidebar-collapsed #sidebar-header {
+            padding-left: 0;
+            padding-right: 0;
+        }
+        html.sidebar-collapsed .sidebar-menu-item {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        html.sidebar-collapsed .sidebar-icon {
+            margin-right: 0;
+        }
+        html.sidebar-collapsed #sidebar-footer-box {
+            display: none;
         }
     </style>
 </head>
@@ -55,7 +53,11 @@
     
     <!-- Script untuk inisialisasi state agar tidak berkedip -->
     <script>
-        if (localStorage.getItem('sidebarExpanded') === 'false') {
+        // Set default to collapsed on mobile to save space, but respect localStorage
+        const isMobile = window.innerWidth < 1024;
+        const storedState = localStorage.getItem('sidebarExpanded');
+        
+        if (storedState === 'false' || (storedState === null && isMobile)) {
             document.documentElement.classList.add('sidebar-collapsed');
         }
     </script>
@@ -79,30 +81,12 @@
 
     <script>
         function toggleSidebar() {
-            const isDesktop = window.innerWidth >= 1024;
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
+            const html = document.documentElement;
+            html.classList.toggle('sidebar-collapsed');
             
-            if (isDesktop) {
-                // Desktop: Toggle collapsed class
-                const html = document.documentElement;
-                html.classList.toggle('sidebar-collapsed');
-                
-                // Simpan state di localStorage
-                const isExpanded = !html.classList.contains('sidebar-collapsed');
-                localStorage.setItem('sidebarExpanded', isExpanded);
-            } else {
-                // Mobile: Toggle off-canvas
-                if (sidebar.classList.contains('-translate-x-full')) {
-                    sidebar.classList.remove('-translate-x-full');
-                    overlay.classList.remove('hidden');
-                    setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-                } else {
-                    sidebar.classList.add('-translate-x-full');
-                    overlay.classList.add('opacity-0');
-                    setTimeout(() => overlay.classList.add('hidden'), 300);
-                }
-            }
+            // Simpan state di localStorage
+            const isExpanded = !html.classList.contains('sidebar-collapsed');
+            localStorage.setItem('sidebarExpanded', isExpanded);
         }
     </script>
 </body>
