@@ -46,7 +46,7 @@
     >
         <div
             class="absolute -top-12 -right-12 w-48 h-48
-                   rounded-full bg-white/10 blur-2xl"
+                   rounded-full bg-white/10 blur-2xl dark:hidden"
         ></div>
 
         <div

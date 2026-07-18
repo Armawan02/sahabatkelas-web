@@ -8,8 +8,8 @@
     <!-- 1. Bagian Pembuka -->
     <div class="bg-gradient-to-r from-blue-600 to-teal-500 rounded-3xl p-8 mb-8 text-white shadow-xl shadow-blue-200/50 relative overflow-hidden transition-all duration-300 hover:shadow-2xl">
         <!-- Dekorasi -->
-        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 bg-white opacity-20 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 right-20 -mb-10 w-32 h-32 bg-teal-300 opacity-30 rounded-full blur-2xl"></div>
+        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 bg-white opacity-20 rounded-full blur-3xl dark:hidden"></div>
+        <div class="absolute bottom-0 right-20 -mb-10 w-32 h-32 bg-teal-300 opacity-30 rounded-full blur-2xl dark:hidden"></div>
 
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div>
