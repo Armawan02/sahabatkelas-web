@@ -54,6 +54,44 @@
                 display: none;
             }
         }
+
+        /* Global Dark Mode Overrides */
+        html.dark body {
+            background-color: #0f172a; /* slate-900 */
+            color: #f8fafc; /* slate-50 */
+        }
+        html.dark main {
+            background-color: #0f172a !important; /* slate-900 */
+        }
+        /* Ubah semua elemen kartu/background putih menjadi slate gelap */
+        html.dark .bg-white {
+            background-color: #1e293b !important; /* slate-800 */
+            border-color: #334155 !important; /* slate-700 */
+        }
+        html.dark .bg-gray-50 {
+            background-color: #0f172a !important; /* slate-900 */
+        }
+        html.dark .bg-gray-100 {
+            background-color: #334155 !important; /* slate-700 */
+        }
+        /* Sesuaikan teks abu-abu/hitam menjadi terang */
+        html.dark .text-gray-800, html.dark .text-gray-900, html.dark .text-gray-700 {
+            color: #f8fafc !important; /* slate-50 */
+        }
+        html.dark .text-gray-500, html.dark .text-gray-600, html.dark .text-gray-400 {
+            color: #94a3b8 !important; /* slate-400 */
+        }
+        /* Sesuaikan border */
+        html.dark .border-gray-100, html.dark .border-gray-200 {
+            border-color: #334155 !important; /* slate-700 */
+        }
+        html.dark .divide-gray-100 > :not([hidden]) ~ :not([hidden]) {
+            border-color: #334155 !important;
+        }
+        html.dark nav {
+            background-color: #1e293b !important;
+            border-bottom-color: #334155 !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans flex h-screen overflow-hidden">
