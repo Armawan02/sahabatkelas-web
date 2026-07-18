@@ -24,7 +24,7 @@ class AuthController extends Controller
             );
         }
 
-        return view('auth.login');
+        return view('landing', ['showLoginModal' => true]);
     }
 
     /**

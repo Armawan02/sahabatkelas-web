@@ -174,16 +174,29 @@
                 </span>
             @endauth
 
-            <a
-                href="{{ $dashboardRoute }}"
-                class="inline-flex items-center justify-center
-                       rounded-xl bg-teal-600 px-4 py-2.5
-                       text-sm font-semibold text-white
-                       hover:bg-teal-700 transition-colors
-                       shadow-sm shadow-teal-200"
-            >
-                {{ $dashboardLabel }}
-            </a>
+            @auth
+                <a
+                    href="{{ $dashboardRoute }}"
+                    class="inline-flex items-center justify-center
+                           rounded-xl bg-teal-600 px-4 py-2.5
+                           text-sm font-semibold text-white
+                           hover:bg-teal-700 transition-colors
+                           shadow-sm shadow-teal-200"
+                >
+                    {{ $dashboardLabel }}
+                </a>
+            @else
+                <button
+                    onclick="openLoginModal()"
+                    class="inline-flex items-center justify-center
+                           rounded-xl bg-teal-600 px-4 py-2.5
+                           text-sm font-semibold text-white
+                           hover:bg-teal-700 transition-colors
+                           shadow-sm shadow-teal-200"
+                >
+                    Masuk ke Platform
+                </button>
+            @endauth
         </div>
     </nav>
 </header>
@@ -262,30 +275,57 @@
                         class="mt-8 flex flex-col sm:flex-row
                                items-stretch sm:items-center gap-3"
                     >
-                        <a
-                            href="{{ $dashboardRoute }}"
-                            class="inline-flex items-center justify-center
-                                   gap-2 rounded-xl bg-teal-600
-                                   px-6 py-3.5 text-sm font-bold text-white
-                                   hover:bg-teal-700 transition-colors
-                                   shadow-lg shadow-teal-200"
-                        >
-                            {{ $dashboardLabel }}
-
-                            <svg
-                                class="w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
+                        @auth
+                            <a
+                                href="{{ $dashboardRoute }}"
+                                class="inline-flex items-center justify-center
+                                       gap-2 rounded-xl bg-teal-600
+                                       px-6 py-3.5 text-sm font-bold text-white
+                                       hover:bg-teal-700 transition-colors
+                                       shadow-lg shadow-teal-200"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M9 5l7 7-7 7"
-                                />
-                            </svg>
-                        </a>
+                                {{ $dashboardLabel }}
+
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </a>
+                        @else
+                            <button
+                                onclick="openLoginModal()"
+                                class="inline-flex items-center justify-center
+                                       gap-2 rounded-xl bg-teal-600
+                                       px-6 py-3.5 text-sm font-bold text-white
+                                       hover:bg-teal-700 transition-colors
+                                       shadow-lg shadow-teal-200"
+                            >
+                                Masuk ke Platform
+
+                                <svg
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M9 5l7 7-7 7"
+                                    />
+                                </svg>
+                            </button>
+                        @endauth
 
                         <a
                             href="#fitur"
@@ -1448,5 +1488,57 @@
         </p>
     </div>
 </footer>
+
+{{-- Login Modal --}}
+<div id="login-modal" class="fixed inset-0 z-[100] flex items-center justify-center hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity backdrop-blur-sm" onclick="closeLoginModal()"></div>
+    <div class="relative transform overflow-hidden rounded-2xl bg-white p-8 text-left shadow-xl transition-all w-full max-w-md border border-teal-100 z-10">
+        <button type="button" onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500">
+            <span class="sr-only">Close</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <div class="text-center mb-8 mt-2">
+            <img src="/img/logo.png" alt="Logo SahabatKelas" class="mx-auto h-20 w-auto mb-4">
+            <h1 class="text-3xl font-bold text-teal-700 mb-2">Sahabat Kelas</h1>
+            <p class="text-sm text-gray-500">Silakan masuk menggunakan akun yang telah diberikan oleh sekolah.</p>
+        </div>
+
+        @if ($errors->any())
+            <div class="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-6 text-center border border-red-100">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form action="{{ route('login.process') }}" method="POST" class="space-y-5">
+            @csrf
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 outline-none">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Kata Sandi</label>
+                <input type="password" id="password" name="password" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 outline-none">
+            </div>
+            <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 rounded-lg mt-2 transition-colors">Masuk</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const loginModal = document.getElementById('login-modal');
+    function openLoginModal() {
+        loginModal.classList.remove('hidden');
+    }
+    function closeLoginModal() {
+        loginModal.classList.add('hidden');
+    }
+
+    @if($errors->any() || isset($showLoginModal))
+        openLoginModal();
+    @endif
+</script>
 </body>
 </html>
