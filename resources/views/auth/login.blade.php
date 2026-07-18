@@ -160,10 +160,10 @@
                 <!-- Image Collage -->
                 <div class="relative">
                     <div class="grid grid-cols-2 gap-4">
-                        <img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=2070&auto=format&fit=crop" alt="Siswa" class="rounded-3xl object-cover h-[400px] w-full shadow-lg" />
+                        <img src="/img/sma_students.png" alt="Siswa SMA" class="rounded-3xl object-cover h-[400px] w-full shadow-lg" />
                         <div class="grid grid-rows-2 gap-4">
-                            <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop" alt="Siswa Belajar" class="rounded-3xl object-cover h-[190px] w-full shadow-lg" />
-                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Interaksi Siswa" class="rounded-3xl object-cover h-[194px] w-full shadow-lg" />
+                            <img src="/img/smp_students.png" alt="Siswa SMP Belajar" class="rounded-3xl object-cover h-[190px] w-full shadow-lg" />
+                            <img src="/img/sd_students.png" alt="Interaksi Siswa SD" class="rounded-3xl object-cover h-[194px] w-full shadow-lg" />
                         </div>
                     </div>
                     
