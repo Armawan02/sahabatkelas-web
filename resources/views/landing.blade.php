@@ -93,9 +93,9 @@
             class="flex items-center gap-3"
         >
             <div
-                class="w-10 h-10 rounded-2xl bg-teal-600
+                class="w-10 h-10 rounded-2xl bg-blue-600
                        flex items-center justify-center
-                       shadow-sm shadow-teal-200"
+                       shadow-sm shadow-blue-200"
             >
                 <svg
                     class="w-6 h-6 text-white"
@@ -120,7 +120,7 @@
                     SahabatKelas
                 </p>
 
-                <p class="text-[10px] font-semibold text-teal-600 mt-1">
+                <p class="text-[10px] font-semibold text-blue-600 mt-1">
                     SEKOLAH AMAN, SISWA NYAMAN
                 </p>
             </div>
@@ -133,28 +133,28 @@
         >
             <a
                 href="#tentang"
-                class="hover:text-teal-600 transition-colors"
+                class="hover:text-blue-600 transition-colors"
             >
                 Tentang
             </a>
 
             <a
                 href="#fitur"
-                class="hover:text-teal-600 transition-colors"
+                class="hover:text-blue-600 transition-colors"
             >
                 Fitur
             </a>
 
             <a
                 href="#alur"
-                class="hover:text-teal-600 transition-colors"
+                class="hover:text-blue-600 transition-colors"
             >
                 Cara Kerja
             </a>
 
             <a
                 href="#pengguna"
-                class="hover:text-teal-600 transition-colors"
+                class="hover:text-blue-600 transition-colors"
             >
                 Pengguna
             </a>
@@ -177,10 +177,10 @@
             <a
                 href="{{ $dashboardRoute }}"
                 class="inline-flex items-center justify-center
-                       rounded-xl bg-teal-600 px-4 py-2.5
+                       rounded-xl bg-blue-600 px-4 py-2.5
                        text-sm font-semibold text-white
-                       hover:bg-teal-700 transition-colors
-                       shadow-sm shadow-teal-200"
+                       hover:bg-blue-700 transition-colors
+                       shadow-sm shadow-blue-200"
             >
                 {{ $dashboardLabel }}
             </a>
@@ -192,7 +192,7 @@
     {{-- Hero --}}
     <section
         class="relative overflow-hidden bg-gradient-to-b
-               from-teal-50/80 via-white to-white hero-grid"
+               from-blue-50/80 via-white to-white hero-grid"
     >
         <div
             class="absolute -top-24 -right-24 w-96 h-96
@@ -216,20 +216,20 @@
                 <div>
                     <div
                         class="inline-flex items-center gap-2
-                               rounded-full border border-teal-200
+                               rounded-full border border-blue-200
                                bg-white px-4 py-2 text-xs
-                               font-semibold text-teal-700 shadow-sm"
+                               font-semibold text-blue-700 shadow-sm"
                     >
                         <span class="relative flex w-2.5 h-2.5">
                             <span
                                 class="absolute inline-flex w-full h-full
-                                       rounded-full bg-teal-400 opacity-75
+                                       rounded-full bg-blue-400 opacity-75
                                        animate-ping"
                             ></span>
 
                             <span
                                 class="relative inline-flex w-2.5 h-2.5
-                                       rounded-full bg-teal-500"
+                                       rounded-full bg-blue-600"
                             ></span>
                         </span>
 
@@ -242,7 +242,7 @@
                                leading-tight"
                     >
                         Membantu sekolah
-                        <span class="text-teal-600">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">
                             memahami kondisi siswa
                         </span>
                         lebih awal.
@@ -265,10 +265,10 @@
                         <a
                             href="{{ $dashboardRoute }}"
                             class="inline-flex items-center justify-center
-                                   gap-2 rounded-xl bg-teal-600
+                                   gap-2 rounded-xl bg-blue-600
                                    px-6 py-3.5 text-sm font-bold text-white
-                                   hover:bg-teal-700 transition-colors
-                                   shadow-lg shadow-teal-200"
+                                   hover:bg-blue-700 transition-colors
+                                   shadow-lg shadow-blue-200"
                         >
                             {{ $dashboardLabel }}
 
@@ -305,7 +305,7 @@
                     >
                         <div class="flex items-center gap-2">
                             <svg
-                                class="w-5 h-5 text-teal-500"
+                                class="w-5 h-5 text-amber-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -323,7 +323,7 @@
 
                         <div class="flex items-center gap-2">
                             <svg
-                                class="w-5 h-5 text-teal-500"
+                                class="w-5 h-5 text-blue-500"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
@@ -584,11 +584,11 @@
                     >
                         <div class="flex items-center gap-3">
                             <div
-                                class="w-10 h-10 rounded-full bg-blue-50
+                                class="w-10 h-10 rounded-full bg-amber-50
                                        flex items-center justify-center"
                             >
                                 <svg
-                                    class="w-5 h-5 text-blue-600"
+                                    class="w-5 h-5 text-amber-600"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
