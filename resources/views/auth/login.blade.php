@@ -63,7 +63,7 @@
 
 <main id="beranda" class="pt-20">
     <!-- Hero Section -->
-    <section class="relative bg-slate-900 overflow-hidden min-h-[650px] flex items-center py-24 pb-48">
+    <section class="relative bg-slate-900 overflow-hidden min-h-[500px] flex items-center pt-16 pb-36">
         <img src="/img/hero_students.png" alt="Siswa di Sekolah Bebas Perundungan" class="absolute inset-0 w-full h-full object-cover opacity-20" />
         
         <!-- Gradient Overlay -->
@@ -84,21 +84,12 @@
                 <a href="#tentang" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-8 py-4 text-base font-bold text-white hover:bg-blue-700 transition-colors shadow-lg shadow-blue-500/30 w-full sm:w-auto">
                     Pelajari Lebih Lanjut &rarr;
                 </a>
-                @auth
-                    <a href="{{ $dashboardRoute }}" class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-bold text-slate-900 hover:bg-gray-100 transition-colors w-full sm:w-auto">
-                        Buka Dashboard
-                    </a>
-                @else
-                    <button onclick="openLoginModal()" class="inline-flex items-center justify-center rounded-xl bg-white px-8 py-4 text-base font-bold text-slate-900 hover:bg-gray-100 transition-colors w-full sm:w-auto">
-                        Login
-                    </button>
-                @endauth
             </div>
         </div>
     </section>
 
     <!-- Feature Cards (Overlapping) -->
-    <section class="relative z-20 -mt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+    <section class="relative z-20 -mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <!-- Card 1 -->
