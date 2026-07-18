@@ -18,74 +18,74 @@
     @endif
 
     <!-- Kartu Sambutan (Hero Section) -->
-    <div
-        class="bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl p-6 md:p-8 text-white shadow-md mb-8 relative overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-teal-500 rounded-3xl p-8 md:p-10 text-white shadow-xl shadow-blue-200/50 mb-10 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
         <!-- Dekorasi Background -->
-        <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"></div>
+        <div class="absolute top-0 right-0 -mt-10 -mr-10 w-48 h-48 bg-white opacity-20 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-10 -mb-10 w-32 h-32 bg-teal-300 opacity-20 rounded-full blur-2xl"></div>
 
-        <div class="relative z-10">
-            <h1 class="text-2xl md:text-3xl font-bold mb-2">
-                Halo,
-                {{ auth()->user()?->siswa?->nama ?? (auth()->user()?->email ?? 'Siswa') }}! 👋
-            </h1>
-            <p class="text-teal-50 text-sm md:text-base max-w-xl leading-relaxed">
-                Bagaimana kabarmu hari ini? Kami harap kamu menjalani minggu yang menyenangkan.
-                Ingat, jangan ragu untuk bercerita jika ada hal yang mengganggu pikiranmu. Kami di sini untuk mendengarkan
-                dan mendukungmu.
-            </p>
+        <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+                <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold mb-3 border border-white/30">Dashboard Siswa</span>
+                <h1 class="text-3xl md:text-4xl font-black mb-3 tracking-tight">
+                    Halo, {{ auth()->user()?->siswa?->nama ?? (auth()->user()?->email ?? 'Siswa') }}! 👋
+                </h1>
+                <p class="text-blue-50 text-sm md:text-base max-w-xl leading-relaxed">
+                    Bagaimana kabarmu hari ini? Ingat, jangan ragu untuk bercerita jika ada hal yang mengganggu pikiranmu. Kami di sini untuk mendengarkan dan mendukungmu sepenuhnya.
+                </p>
+            </div>
+            <div class="hidden md:block shrink-0">
+                <div class="w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 shadow-inner">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Area Menu Utama -->
-    <h2 class="text-lg font-bold text-gray-800 mb-4">Apa yang ingin kamu lakukan?</h2>
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-bold text-gray-800">Apa yang ingin kamu lakukan?</h2>
+    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-        <!-- Kartu Check-in Mingguan -->
-        <div
-            class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:border-blue-300 transition-colors">
+        <!-- Kartu Check-in Mingguan (Blue Theme) -->
+        <div class="group bg-white p-7 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-xl hover:shadow-blue-100/50 hover:border-blue-200 transition-all duration-300 hover:-translate-y-1">
             <div>
-                <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">Check-in Mingguan</h3>
-                <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-                    Ceritakan sedikit tentang perasaan dan suasana belajarmu minggu ini. Hanya butuh 1-2 menit saja!
+                <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-700 transition-colors">Check-in Harian</h3>
+                <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                    Bagikan perasaan dan suasana belajarmu hari ini. Hanya butuh 1 menit untuk membantu kami memahamimu lebih baik.
                 </p>
             </div>
-            <a href="{{ route('siswa.checkin.create') }}"
-                class="block w-full text-center bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold py-2.5 rounded-xl transition-colors">
+            <a href="{{ route('siswa.checkin.create') }}" class="block w-full text-center bg-blue-50 group-hover:bg-blue-600 text-blue-700 group-hover:text-white font-bold py-3.5 rounded-xl transition-all duration-300">
                 Mulai Check-in
             </a>
         </div>
 
-        <!-- Kartu Safe Report -->
-        <div
-            class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between hover:border-teal-300 transition-colors">
+        <!-- Kartu Safe Report (Amber/Orange Theme) -->
+        <div class="group bg-white p-7 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-xl hover:shadow-amber-100/50 hover:border-amber-200 transition-all duration-300 hover:-translate-y-1">
             <div>
-                <div class="w-12 h-12 bg-teal-50 text-teal-600 rounded-xl flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
-                        </path>
+                <div class="w-14 h-14 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
                 </div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">Safe Report</h3>
-                <p class="text-gray-600 text-sm leading-relaxed">
-                    Mengalami atau melihat kejadian tidak nyaman atau perundungan?
-                    Laporkan secara aman melalui halaman ini.
-                </p>
-
-                <p class="text-xs text-gray-500 mt-2 mb-6">
-                    Kamu dapat memilih untuk mengirim laporan secara anonim.
+                <div class="flex items-center gap-3 mb-2">
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">Safe Report</h3>
+                    <span class="px-2 py-0.5 bg-red-100 text-red-600 text-[10px] font-black rounded-full uppercase tracking-wider animate-pulse">Penting</span>
+                </div>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">
+                    Melihat atau mengalami hal tidak nyaman? Laporkan secara aman di sini. Kamu dapat mengirim laporan secara anonim.
                 </p>
             </div>
-            <a href="{{ route('siswa.report.create') }}"
-                class="block w-full text-center bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 rounded-xl transition-colors shadow-sm">
-                Buat Laporan Baru
+            <a href="{{ route('siswa.report.create') }}" class="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-bold py-3.5 rounded-xl transition-all duration-300 shadow-md shadow-amber-200">
+                Buat Laporan Darurat
             </a>
         </div>
 
