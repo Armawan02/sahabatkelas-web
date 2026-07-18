@@ -155,10 +155,87 @@
     </div>
     
     <!-- Footer Sidebar -->
-    <div id="sidebar-footer-box" class="p-4 border-t border-teal-700/50 transition-opacity duration-300">
+    <div id="sidebar-footer-box" class="p-4 border-t border-teal-700/50 transition-opacity duration-300 flex flex-col gap-3">
+        
+        <!-- Dark Mode Toggle -->
+        <button onclick="toggleDarkMode()" class="w-full flex items-center justify-between bg-teal-900/50 hover:bg-teal-900 rounded-xl p-3 transition-colors border border-teal-700/50 group">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-teal-800 flex items-center justify-center text-teal-300 group-hover:text-white transition-colors" id="theme-icon-container">
+                    <!-- Icon Light (Sun) by default -->
+                    <svg id="theme-icon-light" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+                    <!-- Icon Dark (Moon) by default -->
+                    <svg id="theme-icon-dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                </div>
+                <span class="text-sm font-medium text-teal-100 group-hover:text-white transition-colors" id="theme-text">Mode Gelap</span>
+            </div>
+            
+            <!-- Switch UI -->
+            <div class="relative inline-flex h-5 w-9 items-center rounded-full bg-teal-700 transition-colors" id="theme-switch-bg">
+                <span class="inline-block h-3.5 w-3.5 transform rounded-full bg-white transition-transform translate-x-1" id="theme-switch-knob"></span>
+            </div>
+        </button>
+
         <div class="bg-teal-900 rounded-xl p-4 flex flex-col items-center text-center shadow-inner">
             <p class="text-xs font-semibold text-teal-200">Butuh Bantuan?</p>
             <p class="text-[10px] text-teal-400 mt-1">Hubungi Administrator Sekolah Anda</p>
         </div>
     </div>
 </aside>
+
+<script>
+    function toggleDarkMode() {
+        const html = document.documentElement;
+        const isDark = html.classList.contains('dark');
+        
+        const iconLight = document.getElementById('theme-icon-light');
+        const iconDark = document.getElementById('theme-icon-dark');
+        const themeText = document.getElementById('theme-text');
+        const switchBg = document.getElementById('theme-switch-bg');
+        const switchKnob = document.getElementById('theme-switch-knob');
+
+        if (isDark) {
+            // Switch to Light
+            html.classList.remove('dark');
+            localStorage.theme = 'light';
+            
+            iconLight.classList.add('hidden');
+            iconDark.classList.remove('hidden');
+            themeText.textContent = 'Mode Gelap';
+            
+            switchBg.classList.replace('bg-blue-500', 'bg-teal-700');
+            switchKnob.classList.replace('translate-x-4', 'translate-x-1');
+        } else {
+            // Switch to Dark
+            html.classList.add('dark');
+            localStorage.theme = 'dark';
+            
+            iconDark.classList.add('hidden');
+            iconLight.classList.remove('hidden');
+            themeText.textContent = 'Mode Terang';
+            
+            switchBg.classList.replace('bg-teal-700', 'bg-blue-500');
+            switchKnob.classList.replace('translate-x-1', 'translate-x-4');
+        }
+    }
+
+    // Check preference on load
+    window.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            
+            const iconLight = document.getElementById('theme-icon-light');
+            const iconDark = document.getElementById('theme-icon-dark');
+            const themeText = document.getElementById('theme-text');
+            const switchBg = document.getElementById('theme-switch-bg');
+            const switchKnob = document.getElementById('theme-switch-knob');
+            
+            if(iconLight) iconLight.classList.remove('hidden');
+            if(iconDark) iconDark.classList.add('hidden');
+            if(themeText) themeText.textContent = 'Mode Terang';
+            if(switchBg) switchBg.classList.replace('bg-teal-700', 'bg-blue-500');
+            if(switchKnob) switchKnob.classList.replace('translate-x-1', 'translate-x-4');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    });
+</script>

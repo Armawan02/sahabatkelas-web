@@ -6,9 +6,7 @@
 @php
     $admin = auth()->user();
 
-    $namaAdmin = $admin?->name
-        ?? $admin?->email
-        ?? 'Administrator';
+    $namaAdmin = 'Admin';
 
     $totalPeran = array_sum($distribusiPeran);
 
@@ -96,198 +94,126 @@
     </section>
 
     {{-- Statistik utama --}}
-    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
         {{-- Pengguna --}}
         <div
-            class="bg-white rounded-2xl border border-violet-100
-                   border-l-4 border-l-violet-500 shadow-sm p-5
-                   flex items-center gap-4"
+            class="group bg-white rounded-3xl border border-gray-100 shadow-sm p-6
+                   flex flex-col gap-4 hover:shadow-xl hover:shadow-violet-100/50 hover:border-violet-200
+                   transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
         >
-            <div
-                class="w-12 h-12 rounded-full bg-violet-50
-                       text-violet-600 flex items-center justify-center
-                       shrink-0"
-            >
-                <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <div class="absolute top-0 right-0 w-24 h-24 bg-violet-50 rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+            
+            <div class="flex items-center justify-between relative z-10">
+                <div
+                    class="w-14 h-14 rounded-2xl bg-violet-50 text-violet-600 flex items-center justify-center
+                           shrink-0 group-hover:scale-110 group-hover:bg-violet-600 group-hover:text-white
+                           transition-all duration-300 shadow-sm"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857
-                           M17 20H7m10 0v-2c0-.656-.126-1.283
-                           -.356-1.857M7 20H2v-2a3 3 0
-                           015.356-1.857M7 20v-2c0-.656.126
-                           -1.283.356-1.857m0 0a5.002 5.002
-                           0 019.288 0M15 7a3 3 0 11-6
-                           0 3 3 0 016 0zm6 3a2 2 0
-                           11-4 0 2 2 0 014 0zM7 10a2
-                           2 0 11-4 0 2 2 0 014 0z"
-                    />
-                </svg>
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </div>
+                <span class="bg-violet-100 text-violet-700 text-xs font-bold px-2.5 py-1 rounded-full">Total</span>
             </div>
 
-            <div>
-                <p class="text-sm font-medium text-gray-500">
-                    Total Pengguna
-                </p>
-
-                <p class="text-2xl font-bold text-gray-800 mt-1">
+            <div class="relative z-10 mt-2">
+                <p class="text-3xl font-black text-gray-800 tracking-tight group-hover:text-violet-700 transition-colors">
                     {{ $ringkasan['total_pengguna'] ?? 0 }}
-
-                    <span class="text-sm font-normal text-gray-500">
-                        akun
-                    </span>
                 </p>
+                <p class="text-sm font-semibold text-gray-500 mt-1">Total Pengguna</p>
             </div>
         </div>
 
         {{-- Siswa --}}
         <div
-            class="bg-white rounded-2xl border border-blue-100
-                   border-l-4 border-l-blue-500 shadow-sm p-5
-                   flex items-center gap-4"
+            class="group bg-white rounded-3xl border border-gray-100 shadow-sm p-6
+                   flex flex-col gap-4 hover:shadow-xl hover:shadow-blue-100/50 hover:border-blue-200
+                   transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
         >
-            <div
-                class="w-12 h-12 rounded-full bg-blue-50
-                       text-blue-600 flex items-center justify-center
-                       shrink-0"
-            >
-                <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+            
+            <div class="flex items-center justify-between relative z-10">
+                <div
+                    class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center
+                           shrink-0 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white
+                           transition-all duration-300 shadow-sm"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 14l9-5-9-5-9 5 9 5z"
-                    />
-
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 14l6.16-3.422A12.083
-                           12.083 0 0118 15.5c0 1.232.186
-                           2.421.532 3.54L12 22l-6.532
-                           -2.96A11.952 11.952 0 006
-                           15.5c0-1.736-.366-3.386
-                           -1.024-4.878L12 14z"
-                    />
-                </svg>
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 14l6.16-3.422A12.083 12.083 0 0118 15.5c0 1.232.186 2.421.532 3.54L12 22l-6.532-2.96A11.952 11.952 0 006 15.5c0-1.736-.366-3.386-1.024-4.878L12 14z" />
+                    </svg>
+                </div>
+                <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-full">Siswa</span>
             </div>
 
-            <div>
-                <p class="text-sm font-medium text-gray-500">
-                    Data Siswa
-                </p>
-
-                <p class="text-2xl font-bold text-gray-800 mt-1">
+            <div class="relative z-10 mt-2">
+                <p class="text-3xl font-black text-gray-800 tracking-tight group-hover:text-blue-700 transition-colors">
                     {{ $ringkasan['total_siswa'] ?? 0 }}
-
-                    <span class="text-sm font-normal text-gray-500">
-                        siswa
-                    </span>
                 </p>
+                <p class="text-sm font-semibold text-gray-500 mt-1">Siswa Terdaftar</p>
             </div>
         </div>
 
         {{-- Guru --}}
         <div
-            class="bg-white rounded-2xl border border-teal-100
-                   border-l-4 border-l-teal-500 shadow-sm p-5
-                   flex items-center gap-4"
+            class="group bg-white rounded-3xl border border-gray-100 shadow-sm p-6
+                   flex flex-col gap-4 hover:shadow-xl hover:shadow-teal-100/50 hover:border-teal-200
+                   transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
         >
-            <div
-                class="w-12 h-12 rounded-full bg-teal-50
-                       text-teal-600 flex items-center justify-center
-                       shrink-0"
-            >
-                <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <div class="absolute top-0 right-0 w-24 h-24 bg-teal-50 rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+            
+            <div class="flex items-center justify-between relative z-10">
+                <div
+                    class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center
+                           shrink-0 group-hover:scale-110 group-hover:bg-teal-600 group-hover:text-white
+                           transition-all duration-300 shadow-sm"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M5.121 17.804A9.003 9.003 0
-                           0112 15c2.625 0 4.987 1.123
-                           6.629 2.916M15 11a3 3 0
-                           11-6 0 3 3 0 016 0zm6
-                           1a9 9 0 11-18 0 9 9
-                           0 0118 0z"
-                    />
-                </svg>
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M5.121 17.804A9.003 9.003 0 0112 15c2.625 0 4.987 1.123 6.629 2.916M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 1a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <span class="bg-teal-100 text-teal-700 text-xs font-bold px-2.5 py-1 rounded-full">Guru</span>
             </div>
 
-            <div>
-                <p class="text-sm font-medium text-gray-500">
-                    Data Guru
-                </p>
-
-                <p class="text-2xl font-bold text-gray-800 mt-1">
+            <div class="relative z-10 mt-2">
+                <p class="text-3xl font-black text-gray-800 tracking-tight group-hover:text-teal-700 transition-colors">
                     {{ $ringkasan['total_guru'] ?? 0 }}
-
-                    <span class="text-sm font-normal text-gray-500">
-                        guru
-                    </span>
                 </p>
+                <p class="text-sm font-semibold text-gray-500 mt-1">Guru Pendamping</p>
             </div>
         </div>
 
         {{-- Kelas --}}
         <div
-            class="bg-white rounded-2xl border border-orange-100
-                   border-l-4 border-l-orange-500 shadow-sm p-5
-                   flex items-center gap-4"
+            class="group bg-white rounded-3xl border border-gray-100 shadow-sm p-6
+                   flex flex-col gap-4 hover:shadow-xl hover:shadow-amber-100/50 hover:border-amber-200
+                   transition-all duration-300 hover:-translate-y-1 relative overflow-hidden"
         >
-            <div
-                class="w-12 h-12 rounded-full bg-orange-50
-                       text-orange-600 flex items-center justify-center
-                       shrink-0"
-            >
-                <svg
-                    class="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <div class="absolute top-0 right-0 w-24 h-24 bg-amber-50 rounded-full blur-2xl opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+            
+            <div class="flex items-center justify-between relative z-10">
+                <div
+                    class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center
+                           shrink-0 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white
+                           transition-all duration-300 shadow-sm"
                 >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 10h18M5 6h14a2 2 0
-                           012 2v10a2 2 0 01-2
-                           2H5a2 2 0 01-2-2V8a2
-                           2 0 012-2zm3 8h2m4
-                           0h2"
-                    />
-                </svg>
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M3 10h18M5 6h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2zm3 8h2m4 0h2" />
+                    </svg>
+                </div>
+                <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">Kelas</span>
             </div>
 
-            <div>
-                <p class="text-sm font-medium text-gray-500">
-                    Kelas Terdaftar
-                </p>
-
-                <p class="text-2xl font-bold text-gray-800 mt-1">
+            <div class="relative z-10 mt-2">
+                <p class="text-3xl font-black text-gray-800 tracking-tight group-hover:text-amber-600 transition-colors">
                     {{ $ringkasan['total_kelas'] ?? 0 }}
-
-                    <span class="text-sm font-normal text-gray-500">
-                        kelas
-                    </span>
                 </p>
+                <p class="text-sm font-semibold text-gray-500 mt-1">Kelas Terdaftar</p>
             </div>
         </div>
     </section>
