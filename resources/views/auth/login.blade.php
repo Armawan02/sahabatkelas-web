@@ -64,7 +64,7 @@
 <main id="beranda" class="pt-20">
     <!-- Hero Section -->
     <section class="relative bg-slate-900 overflow-hidden min-h-[650px] flex items-center py-24 pb-48">
-        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=2070&auto=format&fit=crop" alt="Siswa di Sekolah" class="absolute inset-0 w-full h-full object-cover opacity-20" />
+        <img src="/img/hero_students.png" alt="Siswa di Sekolah Bebas Perundungan" class="absolute inset-0 w-full h-full object-cover opacity-20" />
         
         <!-- Gradient Overlay -->
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
