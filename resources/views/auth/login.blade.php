@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SahabatKelas adalah platform berbasis AI untuk membantu sekolah mendeteksi dini risiko perundungan, memetakan kondisi siswa, dan mendukung pendampingan yang berkelanjutan.">
     <title>SahabatKelas — Sekolah Aman, Siswa Nyaman</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         html { scroll-behavior: smooth; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
