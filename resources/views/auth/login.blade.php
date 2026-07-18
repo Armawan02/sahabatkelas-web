@@ -63,7 +63,7 @@
 
 <main id="beranda" class="pt-20">
     <!-- Hero Section -->
-    <section class="relative bg-slate-900 overflow-hidden min-h-[500px] flex items-center pt-16 pb-36">
+    <section class="relative bg-slate-900 overflow-hidden min-h-[500px] flex items-center pt-24 pb-32 lg:pb-40">
         <img src="/img/hero_students.png" alt="Siswa di Sekolah Bebas Perundungan" class="absolute inset-0 w-full h-full object-cover opacity-20" />
         
         <!-- Gradient Overlay -->
@@ -71,10 +71,10 @@
         <div class="absolute inset-0 bg-gradient-to-r from-teal-900/50 to-blue-900/50"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h4 class="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight tracking-tight">
+            <h1 class="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6 leading-tight tracking-tight">
                 Mengenali lebih awal, <br/>
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">mendampingi lebih terarah</span>
-            </h4>
+            </h1>
             
             <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
                 Platform cerdas untuk mendeteksi dini risiko perundungan, memetakan kondisi psikologis siswa, dan membangun lingkungan belajar yang aman & nyaman di sekolah.
@@ -89,7 +89,7 @@
     </section>
 
     <!-- Feature Cards (Overlapping) -->
-    <section class="relative z-20 -mt-32 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
+    <section class="relative z-20 -mt-16 lg:-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-24">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <!-- Card 1 -->
